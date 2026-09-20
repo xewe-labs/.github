@@ -28,7 +28,8 @@ with its own `CONTRIBUTING.md` overrides this one.
 
 * **It builds.** Firmware and modules compile for ESP32-C3, C6 and S3 — modules with their own
   `scripts/validate.sh`, firmware with `build/scripts/<platform>/build.sh -c <chip>`. Libraries
-  compile their examples for the same three boards.
+  compile their examples for the same three boards. A library declaring architectures beyond
+  `esp32` also passes the host portability check that `publish.py check` runs.
 * **It is formatted.** `build/scripts/<platform>/format.sh` from a project that has the toolchain
   installed, or `format.sh --check` to only report.
 * **Generated files are not committed.** Installed modules, the installed toolchain, `build/libraries/`,
