@@ -27,7 +27,6 @@ The firmware, the registry it installs from, and the tooling that builds it.
 | [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules) | registry of module repositories, read by `scripts/setup.sh` |
 | [`xewe-os-build-toolchain`](https://github.com/xewe-labs/xewe-os-build-toolchain) | compile, flash, format and release scripts shared by every firmware |
 | [`xewe-os-frontend-builder`](https://github.com/xewe-labs/xewe-os-frontend-builder) | prototype a device web interface as a Flask app, export it into a sketch |
-| [`publish-arduino-library`](https://github.com/xewe-labs/publish-arduino-library) | checks and publishes the libraries to GitHub, Arduino Library Manager and PlatformIO *(private)* |
 
 ### Example builds
 
@@ -68,11 +67,9 @@ Firmware for addressable LED devices, and what connects to it.
 |---|---|
 | [`xewe-led-os`](https://github.com/xewe-labs/xewe-led-os) | the firmware: ultimate OS for addressable LED with ESP32 |
 | [`xewe-led-os-homeassistant`](https://github.com/xewe-labs/xewe-led-os-homeassistant) | Home Assistant integration for a XeWe LED dock |
-| [`xewe-led-reliable-dock`](https://github.com/xewe-labs/xewe-led-reliable-dock) | dock hardware and assets *(private)* |
 | [`xewe-led-os-frontend`](https://github.com/xewe-labs/xewe-led-os-frontend) | web interface for the firmware *(archived)* |
 | [`xewe-led-os-draft`](https://github.com/xewe-labs/xewe-led-os-draft) | the first draft of the firmware *(archived)* |
 | [`xewe-led-web-draft`](https://github.com/xewe-labs/xewe-led-web-draft) | simple web interface to control LED lights *(archived)* |
-| [`xewe-led-web-ui`](https://github.com/xewe-labs/xewe-led-web-ui) | web UI experiments *(archived, private)* |
 
 Forked Arduino libraries the LED firmware was built on, kept for reference and archived:
 [espalexa](https://github.com/xewe-labs/xewe-led-library-espalexa),
@@ -105,5 +102,4 @@ Rules and guidelines live in [`.github`](https://github.com/xewe-labs/.github). 
 [`guidelines/repositories.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/repositories.md)
 for what each repository family is named and how it is released.
 
-Repositories marked *private* are visible to organization members only.
 Everything here is GPL-3.0-only unless a repository says otherwise.
