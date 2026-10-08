@@ -33,14 +33,20 @@ Conventions that keep the repositories readable together:
 * **Link across repositories** with full GitHub URLs, since these READMEs are read on their own.
 * **No placeholder sections.** An empty "Roadmap" is worse than no section.
 
-Family specifics: a module README lists its commands in a table with the `$prefix`, its
-requirements and how to validate it; a library README shows the entry header, a minimal sketch and
-its dependencies; firmware documents the CLI and the build scripts.
+Repository specifics: XeWeCore's README shows the one include (`<XeWeCore.h>`), a minimal sketch,
+the `os.serial`/`os.cli`/`os.nvs`/`os.system` members and its dependency, with the full reference
+in its `doc/`. Each module's `modules/<slug>/README.md` lists its commands in a table with the
+`$<id>` prefix, its requirements and a Tests section (preconditions and the `xewe test --module`
+line); the modules repo's own README says what a module is and how to add one. The tools README
+lists the command surface; the template README covers clone, `./setup.sh`, `./run.sh` and what is
+committed vs generated. Why the ecosystem is shaped the way it is goes in
+`xewe-os/ARCHITECTURE.md`, not in every README.
 
 ## Agent files
 
 A repository that an agent works in carries an `AGENTS.md` (or `CLAUDE.md` where the tooling reads
-that name) at its root, describing what the README does not: the invariants, which files are
+that name) at its root (XeWeCore keeps it at `doc/AGENTS.md`, linked from its README, so it ships
+with the library reference), describing what the README does not: the invariants, which files are
 generated, what breaks silently, and what must never be run. It is short and prescriptive, and it
 does not repeat the README. Organization-wide agent rules are in
 [`../AGENTS.md`](../AGENTS.md).

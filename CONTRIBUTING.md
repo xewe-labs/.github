@@ -5,8 +5,10 @@ with its own `CONTRIBUTING.md` overrides this one.
 
 ## Before you start
 
-* **A module?** You do not need access to this organization. Build it in your own repository and
-  add it to the registry: [xewe-os-modules](https://github.com/xewe-labs/xewe-os-modules), rules in
+* **A module?** You do not need access to this organization. Open a module proposal issue on
+  [xewe-os-modules](https://github.com/xewe-labs/xewe-os-modules), then a pull request adding
+  `modules/<slug>/` to it. Rules in
+  [`CONTRACT.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/CONTRACT.md), summarised in
   [`guidelines/modules.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/modules.md).
 * **A change to existing code?** Open an issue first when the change is large, changes behaviour
   people depend on, or touches more than one repository. Small fixes can go straight to a pull
@@ -14,9 +16,11 @@ with its own `CONTRIBUTING.md` overrides this one.
 
 ## Working on a change
 
-1. Clone the repositories you need side by side in one folder. The tooling finds them that way:
-   `xewe-os` installs modules from local clones with `--modules-source ..`, and the publishing
-   tool discovers libraries as sibling folders.
+1. Clone the repositories you need side by side in one folder, and work in a **copy** of the
+   `xewe-os` template as the harness. Its setup takes local checkouts instead of the pinned refs:
+   `./setup.sh --core-source ../xewe-os-core --modules-source ../xewe-os-modules`, and
+   `XEWE_TOOLS_SOURCE=../xewe-os-tools` for the tools. The publishing tool discovers the library
+   as a sibling folder.
 2. Branch off `main`.
 3. Follow [`guidelines/cpp-style.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/cpp-style.md) for C++ and
    [`guidelines/git-and-releases.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/git-and-releases.md) for commits and versions.
@@ -26,14 +30,13 @@ with its own `CONTRIBUTING.md` overrides this one.
 
 ## Before opening a pull request
 
-* **It builds.** Firmware and modules compile for ESP32-C3, C6 and S3 — modules with their own
-  `scripts/validate.sh`, firmware with `build/scripts/<platform>/build.sh -c <chip>`. Libraries
-  compile their examples for the same three boards. A library declaring architectures beyond
-  `esp32` also passes the host portability check that `publish.py check` runs.
-* **It is formatted.** `build/scripts/<platform>/format.sh` from a project that has the toolchain
-  installed, or `format.sh --check` to only report.
-* **Generated files are not committed.** Installed modules, the installed toolchain, `build/libraries/`,
-  `builds/`, `.venv/` and `build_config` stay out of git. See each repository's `.gitignore`.
+* **It builds.** Everything compiles for ESP32-C3, C6 and S3 with 0 warnings, locally (there is
+  no CI): firmware with `build/.venv/bin/python -m xewe build --all-chips`, a module with
+  `xewe test --module <slug> --all-chips` in a harness plus `tools/validate.py`, XeWeCore with
+  `publish.py check xewe-os-core` and `extras/host/run.sh`, the tools with their pytest suite.
+* **It is formatted** to [`guidelines/cpp-style.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/cpp-style.md).
+* **Generated files are not committed.** `build/`, `src/modules/` (with `Modules.h` and
+  `modules.lock`), `.venv/` and caches stay out of git. See each repository's `.gitignore`.
 * **Say what you tested.** Which boards, which commands, what you did not test.
 
 ## Review

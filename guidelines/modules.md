@@ -1,100 +1,58 @@
 # Modules
 
-A XeWe OS module is one feature — WiFi, a schedule, a relay — in its own repository. Firmware is
-assembled from modules: [`xewe-os`](https://github.com/xewe-labs/xewe-os)'s `setup.sh` reads the
-[registry](https://github.com/xewe-labs/xewe-os-modules), copies each chosen module's
-`src/<Folder>/` into `src/modules/<Folder>/` and generates `src/modules/Modules.h`, which includes
-and declares them in dependency order.
+A module is one feature (WiFi, a schedule, a relay) that someone figured out once so nobody has to
+figure it out again. All modules live in one repository,
+[`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules), under `modules/<slug>/`.
 
-Modules are built on the [XeWeOS framework](https://github.com/xewe-labs/xewe-library-os); its
-README ("Writing a module") covers the API and lifecycle, and its `extras/ModuleTemplate` is the
-starting point. A module may live under any GitHub account, not only `xewe-labs`.
+**The rules are in
+[`xewe-os-modules/CONTRACT.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/CONTRACT.md)**,
+with a checklist in its
+[`AGENTS.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/AGENTS.md). This page only
+lists what is never negotiable; where the two differ, `CONTRACT.md` wins.
 
-## Repository layout
+## Non-negotiables
 
-| Path | |
-|---|---|
-| `src/<Name>/<Name>.{h,cpp}` | the module: one folder named like the class |
-| `module.properties` | metadata read by `setup.sh` and `scripts/validate.sh` |
-| `xewe-os-module-<slug>.ino` | validation firmware: framework + required modules + this module |
-| `scripts/validate.sh` | builds that firmware on its own (copied unchanged between modules) |
-| `README.md`, `LICENSE.txt`, `.gitignore` | |
+1. **One repo.** A module is a folder `modules/<slug>/` in `xewe-os-modules` and arrives by pull
+   request. There are no per-module repositories, sketches or build scripts.
+2. **Layout.** Exactly `module.properties`, `src/<Folder>/<Folder>.h`, `src/<Folder>/<Folder>.cpp`,
+   `tests/test_<slug>.py` and `README.md`. Only `src/<Folder>/` is installed into a firmware
+   (`src/modules/<Folder>/`).
+3. **`module.properties`** has every key, in the contract's order, even when empty, including
+   `requires_core=>=2.0.0,<3.0.0` (comma form).
+4. **`id` is at most 15 characters** (`[a-z][a-z0-9_]*`). It is the CLI group (`$<id>`) and the
+   NVS namespace, so it never changes once released. `slug` and `folder` are fixed too.
+5. **The declare line stays explicit:** `declare=<Folder> <var>(os[, <dep var>...]);` is copied
+   verbatim into the generated `Modules.h`. The type is the folder, the first argument is `os`, the
+   other arguments are the variables of modules listed in `depends_modules`.
+6. **Code.** `class <Folder> : public xewe::Module` in the global namespace. The header includes
+   `<XeWeCore.h>` and no other XeWeCore header; a required module is included relatively
+   (`#include "../Wifi/Wifi.h"`).
+7. **The constructor's Os parameter is named `host`**, dependency parameters `<var>_ref`. Bodies
+   and lambdas use the member `os`, never `this->os`.
+8. **Handlers capture `[this]` only**, never `[&]` or `[=]`.
+9. **Never write `cli(`.** arduino-esp32 defines `cli()` as a macro: use `os.cli.execute("...")`
+   and brace-initialise anything named `cli`.
+10. **Three required tests** in `tests/test_<slug>.py`: `test_compiles` (really builds, even with
+    no board), `test_status` (`$<id> status` prints `<name> module (enabled|disabled)`) and one
+    behaviour test on one of the module's own commands.
+11. **The validator must pass:** `tools/validate.py` exits 0 before a change is done.
 
-Only `src/<Folder>/` is installed into firmware. Everything else — the sketch, scripts, build
-folder — exists so the module can be built and tested on its own.
+## Before a module change is done
 
-## `module.properties`
-
-```
-name=Relay
-slug=relay
-id=relay
-version=0.1.0
-description=Switches a relay from the command line and schedules
-repo=https://github.com/xewe-labs/xewe-os-module-relay
-folder=Relay
-include=src/Relay/Relay.h
-declare=Relay relay(os, time_module);
-depends_modules=time
-depends_libraries=XeWeOS (>=0.1.0)
-```
-
-* `slug` is lowercase with dashes and names the repository: `xewe-os-module-<slug>`.
-* `id` is at most 15 characters. It is the CLI group (`$relay`) and the NVS namespace, so it can
-  never change once devices store data under it.
-* `folder` is the single folder installed into `src/modules/`, named like the class.
-* `declare` is the exact line placed in the generated `Modules.h`. It may use `os` and the variable
-  names from the `declare` lines of the modules it requires (`wifi`, `time_module`, ...).
-* `depends_modules` lists slugs; setup adds them, and their own requirements, automatically and
-  declares them first. `description` is one line: it is what the module checklist shows.
-
-## Code
-
-Global namespace, the class named like the folder, the framework included as `#include <XeWeOS.h>`
-and other modules relatively (`#include "../Wifi/Wifi.h"`), since installed modules sit side by
-side. The rest is in [`cpp-style.md`](cpp-style.md).
-
-A module takes what it needs by reference and registers the requirement:
-
-```cpp
-Relay(xewe::os::ModuleController& controller, Time& time_module, RelayConfig config = {})
-    : Module(controller, "relay", "Relay", "Switches a relay",
-             /* requires_init_setup */ false,
-             /* can_be_disabled     */ true,
-             /* has_cli_commands    */ true)
-    , time_module(time_module) {
-    add_requirement(time_module);
-    register_command({"on", "Turn the relay on", "$relay on", 0,
-                      [this](std::span<const std::string>) { set(true); }});
-}
-```
-
-A module whose requirement is disabled is disabled too, and disabling a requirement cascades.
-
-## Validate, then register
+Run from a **copy** of the `xewe-os` template used as the harness:
 
 ```bash
-scripts/validate.sh                  # compiles framework + requirements + this module for c3, c6, s3
-scripts/validate.sh -b c3 -p <port>  # run it on a board
+./setup.sh --modules <slug>                                                 # in the harness; re-run after each edit
+<harness>/build/.venv/bin/python tools/validate.py --harness <harness>   # in the modules repo
+build/.venv/bin/python -m xewe test --module <slug> --all-chips             # in the harness: c3, c6, s3
 ```
 
-Try it inside firmware before registering, with a local registry list whose entries may be local
-folders:
+Without a board, `test_compiles` passes or fails for real and the serial tests report "compiled,
+not run". The full gate (isolation and all modules together) is in the modules repo's README.
 
-```bash
-cp <xewe-os-modules clone>/repositories.txt /tmp/repositories.txt
-echo "$HOME/code/xewe-os-module-relay" >> /tmp/repositories.txt
-./setup.sh --modules relay --modules-index /tmp/repositories.txt
-```
+## Changing a released module
 
-Then open a pull request adding the repository URL to `repositories.txt` in
-[xewe-os-modules](https://github.com/xewe-labs/xewe-os-modules); its README lists what reviewers
-check. Once merged, the module appears in every `setup.sh` checklist, so treat `main` of a
-registered module as something other people build.
-
-## Changing a registered module
-
-`id`, `slug` and `folder` are fixed after registration — devices store settings under `id`, and
-firmware includes the folder. Removing or renaming a command changes the interface people script
-against: bump MINOR for additions, MAJOR for anything that breaks an existing command, and say so
-in the README.
+Removing or renaming a command changes the interface people script against: bump the module's
+`version` MINOR for additions and MAJOR for breaking changes (pre-1.0: MINOR for breaking), and say
+so in its README. The repo is then tagged as a whole (`vX.Y.Z`), and projects move to it with
+`xewe lock update`.
