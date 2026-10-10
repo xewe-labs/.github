@@ -23,8 +23,13 @@ Rules of thumb:
 * **A project built from the template** keeps its own code in the sketch and `Config.h`. A feature
   that turns out reusable moves into the modules repo as a pull request.
 
-There is no CI for now, by decision. Builds and tests are local: `xewe build --all-chips` and
-`xewe test` from `xewe-os-tools` are the gate, with or without a board.
+CI runs on GitHub Actions through reusable workflows in `xewe-os-tools/.github/workflows/`
+(`xewe-build.yml`, `xewe-release.yml`, `xewe-core-tests.yml`, `xewe-modules-tests.yml`); each
+repository holds only a short caller in its own `.github/workflows/`, and
+[`xewe-os-tools/ci/README.md`](https://github.com/xewe-labs/xewe-os-tools/blob/main/ci/README.md)
+documents them. CI runs the same commands as a laptop (`./setup.sh`, `xewe build`, `xewe test`
+without a board, `xewe release` on a `v*` tag, which publishes a GitHub Release and the
+`releases` branch for the web flasher). Board tests stay local, with a board attached.
 
 ## Naming
 
