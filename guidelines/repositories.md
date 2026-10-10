@@ -10,7 +10,7 @@ Why the split is drawn this way is in
 | `xewe-os-core` | the `XeWeCore` Arduino library | reusable code every firmware needs: utils, serial console, CLI, NVS/FlexData, the `XeWeOs` facade and `xewe::Module` | semver tag `X.Y.Z` (no `v`), Arduino Library Manager, PlatformIO |
 | `xewe-os-modules` | every module, under `modules/<slug>/` | code figured out once: one feature (WiFi, a schedule, a sensor) a firmware can select | repo tag `vX.Y.Z`; each module declares `requires_core` |
 | `xewe-os-tools` | the Python package `xewe` | everything that builds, flashes, talks to or tests a board: setup, build, flash, serial, provision, test, boards, modules, manifest, release | tag `vX.Y.Z` |
-| `xewe-os` | the firmware template (a GitHub template repository) | the thing users clone: sketch, `Config.h`, `xewe.toml`, two example modules, `setup.sh`, `run.sh`, docs | its own version in `xewe.toml [project]`; firmware releases under `static/firmware/releases/` |
+| `xewe-os` | the firmware template (a GitHub template repository) | the thing users clone: sketch, `Config.h`, `xewe.toml`, two example modules, `setup.sh`, `run.sh`, docs | its own version in `xewe.toml [project]`; firmware releases as GitHub Releases built by CI |
 | `publish-arduino-library` | a generic Arduino-library publishing tool | checking and releasing `XeWeCore` (and any other Arduino library) | tag `vX.Y.Z` |
 | `.github` | organization profile, guidelines, issue and pull request templates | rules that span repositories | not released |
 
@@ -46,7 +46,7 @@ the refs in `xewe.toml`, fetched by `./setup.sh`.
 
 | Repository | Committed | Generated, ignored |
 |---|---|---|
-| `xewe-os` (and every project cloned from it) | `xewe-os.ino`, `Config.h`, `xewe.toml`, `src/<YourModule>/`, `setup.sh`, `run.sh`, docs, `.agents/`, `static/firmware/releases/` | `build/` (tools venv, XeWeCore, libraries, the generated `build/modules/` with `modules.lock`, `builds/<chip>/out/`), `src/Modules.h` |
+| `xewe-os` (and every project cloned from it) | `xewe-os.ino`, `Config.h`, `xewe.toml`, `src/<YourModule>/`, `setup.sh`, `run.sh`, docs, `.agents/`, `static/` (web assets; release binaries are published by CI, not committed) | `build/` (tools venv, XeWeCore, libraries, the generated `build/modules/` with `modules.lock`, `builds/<chip>/out/`), `src/Modules.h` |
 | `xewe-os-core` | library sources, examples, `doc/`, `tests/`, `library.properties`, `library.json` | build output of examples and host tests |
 | `xewe-os-modules` | `modules/<slug>/`, `tools/validate.py`, `libraries.toml`, `MODULES.md` | `__pycache__/`, `.pytest_cache/`, `build/`, `.venv/` |
 | `xewe-os-tools` | the package, its tests, `scripts/` | `.venv/`, `build/`, `*.egg-info/`, caches |
@@ -58,9 +58,9 @@ Two generated files are committed on purpose: `library.json` (registries read it
 repository; regenerate it with `publish.py manifest`, never hand-edit) and `MODULES.md` (written by
 `tools/validate.py --write-index`, checked by the validator).
 
-**Firmware releases are committed** under `static/firmware/releases/<version>/` (binaries,
-manifests, notes, `firmware-<version>.tar.gz`), written by `xewe release`. The web flasher reads
-them from there.
+**Firmware releases are not committed to `main`.** CI builds them from a version tag with
+`xewe release` and publishes them as a GitHub Release and, for the web flasher, on the `releases`
+branch ([`git-and-releases.md`](git-and-releases.md#release-channels)).
 
 ## Versions
 
@@ -105,7 +105,7 @@ reference copies of the template's scripts.
 
 **Template** has the sketch and `Config.h` at the root, `setup.sh` and `run.sh` as thin wrappers
 around `xewe`, `xewe.toml`, project-local modules in `src/<Folder>/`, the generated `src/Modules.h`,
-`build/` for everything installed and generated, and `static/` for released binaries and media.
+`build/` for everything installed and generated, and `static/` for web assets and media.
 
 ## Repository settings
 
