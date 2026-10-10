@@ -8,8 +8,15 @@ with no board attached: builds compile and tests report "compiled, not run".
 
 ## Start here
 
-Clone [**xewe-os**](https://github.com/xewe-labs/xewe-os), then `./setup.sh` and `./run.sh`. Its
-[README](https://github.com/xewe-labs/xewe-os#readme) covers the first five minutes.
+Pick the level that fits:
+
+| Level | You use | Start with |
+|---|---|---|
+| 1 | the Arduino IDE: Library Manager → `XeWeCore` | the console, NVS and prompts: example [`01_Hello`](https://github.com/xewe-labs/xewe-os-core/tree/main/examples/01_Hello) |
+| 2 | the same, plus one module of your own in the sketch folder | example [`02_MyModule`](https://github.com/xewe-labs/xewe-os-core/tree/main/examples/02_MyModule) |
+| 3 | the [**xewe-os**](https://github.com/xewe-labs/xewe-os) template and the `xewe` tools | clone it, `./setup.sh`, `./run.sh`: ready-made modules, multi-chip builds, board tests, releases |
+
+The template's [README](https://github.com/xewe-labs/xewe-os#readme) covers the first five minutes;
 [ARCHITECTURE.md](https://github.com/xewe-labs/xewe-os/blob/main/ARCHITECTURE.md) explains why it
 is shaped this way.
 
@@ -17,10 +24,10 @@ is shaped this way.
 
 | Repository | |
 |---|---|
-| [`xewe-os`](https://github.com/xewe-labs/xewe-os) | the firmware template you clone (or "Use this template"); holds only your code and `xewe.lock` |
+| [`xewe-os`](https://github.com/xewe-labs/xewe-os) | the firmware template you clone (or "Use this template"); holds only your code and `xewe.toml` |
 | [`xewe-os-core`](https://github.com/xewe-labs/xewe-os-core) | `XeWeCore`, the Arduino library: serial console, CLI, NVS storage, helpers and the module system |
-| [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules) | every module in one repo: WiFi, web interface, time, scheduler, buttons, pins |
-| [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) | `xewe`, one Python tool for setup, build, flash, serial and test |
+| [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules) | every module in one repo: Wi-Fi, web interface, time, scheduler, buttons, pins, LED, fan, MLX90614 sensor |
+| [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) | `xewe`, one Python tool for setup, build, flash, serial, provisioning and test |
 | [`publish-arduino-library`](https://github.com/xewe-labs/publish-arduino-library) | checks and releases Arduino libraries; used to publish `XeWeCore` |
 
 Boards: ESP32-C3, ESP32-C6 and ESP32-S3. Flashing is over serial only (no OTA).
@@ -31,10 +38,11 @@ compiles for all three chips (`xewe build --all-chips`) and runs the tests with 
 ## Why it is shaped this way
 
 The four repos split along one line: what you clone (`xewe-os`), what you build on (`xewe-os-core`),
-what you pick (`xewe-os-modules`) and what builds it (`xewe-os-tools`). The template pins exact
-versions of the other three in `xewe.lock`, so a project builds the same way next year. The
-decisions behind this, the version policy and the migration from the older per-library and
-per-module repositories are in
+what you pick (`xewe-os-modules`) and what builds it (`xewe-os-tools`). A project's `xewe.toml`
+names one ref of each of the other three. Today those refs are `latest`, the newest commit of each
+default branch; every repository is tagged `v3.0.0` together, and from then on a project freezes
+its refs at tags so it builds the same way next year. The decisions behind this and the version
+policy are in
 [xewe-os/ARCHITECTURE.md](https://github.com/xewe-labs/xewe-os/blob/main/ARCHITECTURE.md).
 
 ## Products

@@ -24,9 +24,9 @@ library quirk that took effort, and what a firmware gets by selecting it. -->
 
 **Dependencies**
 - `depends_modules`: <!-- slugs of existing modules, or none -->
-- `depends_libraries`: <!-- third-party Arduino libraries that must be pinned in the template's
-  xewe.lock [libraries]; not esp32-core libraries (WiFi, Wire, ...), not XeWeCore -->
-- `requires_core`: <!-- usually >=2.0.0,<3.0.0 -->
+- `depends_libraries`: <!-- third-party Arduino libraries, pinned in the modules repo's
+  libraries.toml; not esp32-core libraries (WiFi, Wire, ...), not XeWeCore -->
+- `requires_core`: <!-- usually >=2.1.0,<3.0.0 -->
 
 **Commands**
 

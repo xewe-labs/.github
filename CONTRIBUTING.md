@@ -19,7 +19,8 @@ with its own `CONTRIBUTING.md` overrides this one.
 1. Clone the repositories you need side by side in one folder, and work in a **copy** of the
    `xewe-os` template as the harness. Its setup takes local checkouts instead of the pinned refs:
    `./setup.sh --core-source ../xewe-os-core --modules-source ../xewe-os-modules`, and
-   `XEWE_TOOLS_SOURCE=../xewe-os-tools` for the tools. The publishing tool discovers the library
+   `XEWE_TOOLS_SOURCE=../xewe-os-tools` for the tools (`XEWE_CORE_SOURCE` and
+   `XEWE_MODULES_SOURCE` are the environment forms). The publishing tool discovers the library
    as a sibling folder.
 2. Branch off `main`.
 3. Follow [`guidelines/cpp-style.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/cpp-style.md) for C++ and
@@ -31,12 +32,12 @@ with its own `CONTRIBUTING.md` overrides this one.
 ## Before opening a pull request
 
 * **It builds.** Everything compiles for ESP32-C3, C6 and S3 with 0 warnings, locally (there is
-  no CI): firmware with `build/.venv/bin/python -m xewe build --all-chips`, a module with
+  no CI): firmware with `build/tools/.venv/bin/python -m xewe build --all-chips`, a module with
   `xewe test --module <slug> --all-chips` in a harness plus `tools/validate.py`, XeWeCore with
-  `publish.py check xewe-os-core` and `extras/host/run.sh`, the tools with their pytest suite.
+  `publish.py check xewe-os-core` and `tests/unit/run.sh`, the tools with their pytest suite.
 * **It is formatted** to [`guidelines/cpp-style.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/cpp-style.md).
-* **Generated files are not committed.** `build/`, `src/modules/` (with `Modules.h` and
-  `modules.lock`), `.venv/` and caches stay out of git. See each repository's `.gitignore`.
+* **Generated files are not committed.** `build/`, `src/Modules.h`, `.venv/` and
+  caches stay out of git. See each repository's `.gitignore`.
 * **Say what you tested.** Which boards, which commands, what you did not test.
 
 ## Review

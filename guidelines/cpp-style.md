@@ -5,12 +5,10 @@ the formatter wins.
 
 ## Formatting
 
-`clang-format` plus a few custom passes, configured in the legacy build toolchain at
-`tools/code_formatter/.clang-format`. `xewe-os-tools` does not carry the formatter yet (its
-`SPEC.md`, open point O10); until it does, match the rules below by hand or run `clang-format` with
-that file.
+None of the repositories carries a formatter configuration yet (`xewe-os-tools` `SPEC.md`, open
+point O10); until one does, match the rules below by hand.
 
-What it enforces, so hand-written code lands close to it: four spaces and no tabs, no column
+The style: four spaces and no tabs, no column
 limit (a signature or a comment banner stays on one line), attached braces, `Type* name` and
 `Type& name`, case labels indented under their `switch`, one constructor initializer per line with
 leading commas, and aligned columns for consecutive `#define`s, declarations and assignments.
@@ -24,7 +22,7 @@ Include order is preserved, never sorted.
 * **A module is one folder per class**, named exactly like the class, holding files with the same
   name: `src/Wifi/Wifi.h`, `src/Wifi/Wifi.cpp`.
 * **Classes carry no prefix.** Everything in XeWeCore lives in `namespace xewe` (plus `xewe::str`
-  and `xewe::color`); the 1.0.0 framework namespace `xewe::os` is gone (was → now: `xewe`). The only global XeWeCore name is `XeWeOs`,
+  and `xewe::color`; there is no `xewe::os` namespace). The only global XeWeCore name is `XeWeOs`,
   an alias of `xewe::Os`. Modules live in the global namespace.
 * **XeWeCore has exactly one top-level header**, `src/XeWeCore.h`, the umbrella that includes the
   sub-headers in `src/XeWeCore/`. Arduino puts every library's `src/` on the include path, so a
@@ -59,8 +57,9 @@ build, never by editing the file:
 
 Pass it as a compiler flag (`-DDEBUG_Wifi=1`, arduino-cli
 `--build-property "compiler.cpp.extra_flags=-DDEBUG_Wifi=1"`). `xewe build --define` is not a
-substitute: its values land in the generated `<XeWeBuildInfo.h>`, which only the sketch's
-`Config.h` includes, so they never reach a module's or XeWeCore's own `.cpp` files.
+substitute: its values land in the generated `<XeWeBuildInfo.h>`, which the sketch's `Config.h`
+includes, so they never reach a module's `.cpp` files. XeWeCore reads that header only for
+`XEWE_TESTING` and `XEWE_DEVICE_NAME`.
 
 ## Dependencies
 
@@ -87,8 +86,8 @@ Arduino cores are C++17 with `-fno-exceptions`.
   `xewe::str::parse_int` / `parse_float`, which report failure by returning `false`.
 * **Platform-specific API goes behind a named feature macro**, `XEWE_<AREA>_HAS_<FEATURE>`,
   declared with `#ifndef`, defaulted from core detection, and overridable from build flags — the
-  same shape as the `DEBUG_<Class>` flags. XeWeSerial 1.0.0's `XEWE_SERIAL_HAS_BUFFER_SIZING`
-  was the example; esp32-only XeWeCore needs none.
+  same shape as the `DEBUG_<Class>` flags (for example `XEWE_SERIAL_HAS_BUFFER_SIZING`);
+  esp32-only XeWeCore needs none.
 * **Optional vendor headers are gated with `__has_include`**, never a core-name `#ifdef`, and
   never from a header a library's entry header includes unconditionally.
 
@@ -98,8 +97,15 @@ Also avoid `Serial.printf`: it is not on the `Print` class for AVR, SAMD or STM3
 ## What "done" means
 
 Code compiles for ESP32-C3, C6 and S3 before it is committed: XeWeCore through its examples
-(`publish.py check`) and `extras/host/run.sh`, a module through `xewe test --module <slug>
+(`publish.py check`) and its host tests (`tests/unit/run.sh`), a module through `xewe test --module <slug>
 --all-chips` in an `xewe-os` harness, firmware through `xewe build --all-chips`, all with 0
 warnings. A library that declares architectures beyond `esp32` also passes the host portability
 check (`publish.py check`: C++17, `-fno-exceptions`, `-fno-rtti`, against a minimal Arduino shim),
 which is the only automated evidence behind a non-ESP32 claim.
+
+## Comments
+
+A comment says what the code does or why: an invariant, a limit, a hardware or library fact, a
+stored-data compatibility reason. No process in code (agent or session names, dates, decision or
+finding ids, "was …" history); see [`documentation.md`](documentation.md#no-process-in-code-or-docs).
+Example code (core examples, the template's example modules) explains the API to its reader.

@@ -1,6 +1,7 @@
 # Repositories
 
-XeWe OS is four repositories plus one kept tool. Each has one job; code goes where its job is.
+XeWe OS is four repositories plus one kept tool, and this `.github` repository holds the
+organization's rules. Each has one job; code goes where its job is.
 Why the split is drawn this way is in
 [`xewe-os/ARCHITECTURE.md`](https://github.com/xewe-labs/xewe-os/blob/main/ARCHITECTURE.md).
 
@@ -8,9 +9,10 @@ Why the split is drawn this way is in
 |---|---|---|---|
 | `xewe-os-core` | the `XeWeCore` Arduino library | reusable code every firmware needs: utils, serial console, CLI, NVS/FlexData, the `XeWeOs` facade and `xewe::Module` | semver tag `X.Y.Z` (no `v`), Arduino Library Manager, PlatformIO |
 | `xewe-os-modules` | every module, under `modules/<slug>/` | code figured out once: one feature (WiFi, a schedule, a sensor) a firmware can select | repo tag `vX.Y.Z`; each module declares `requires_core` |
-| `xewe-os-tools` | the Python package `xewe` | everything that builds, flashes, talks to or tests a board: setup, build, flash, serial, test, boards, modules, lock, release | tag `vX.Y.Z` |
-| `xewe-os` | the firmware template (a GitHub template repository) | the thing users clone: sketch, `Config.h`, `xewe.lock`, `setup.sh`, `run.sh`, docs | its own version in `xewe.lock [project]`; firmware releases under `static/firmware/releases/` |
+| `xewe-os-tools` | the Python package `xewe` | everything that builds, flashes, talks to or tests a board: setup, build, flash, serial, provision, test, boards, modules, manifest, release | tag `vX.Y.Z` |
+| `xewe-os` | the firmware template (a GitHub template repository) | the thing users clone: sketch, `Config.h`, `xewe.toml`, two example modules, `setup.sh`, `run.sh`, docs | its own version in `xewe.toml [project]`; firmware releases under `static/firmware/releases/` |
 | `publish-arduino-library` | a generic Arduino-library publishing tool | checking and releasing `XeWeCore` (and any other Arduino library) | tag `vX.Y.Z` |
+| `.github` | organization profile, guidelines, issue and pull request templates | rules that span repositories | not released |
 
 Rules of thumb:
 
@@ -35,14 +37,17 @@ rather than renamed.
 ## Committed vs generated
 
 Nothing generated is committed, and there are no submodules. The template's dependencies come from
-`xewe.lock` at pinned refs, fetched by `./setup.sh`.
+the refs in `xewe.toml`, fetched by `./setup.sh`.
 
 | Repository | Committed | Generated, ignored |
 |---|---|---|
-| `xewe-os` (and every project cloned from it) | `xewe-os.ino`, `Config.h`, `xewe.lock`, `setup.sh`, `run.sh`, docs, `static/firmware/releases/` | `build/` (venv, arduino-cli, esp32 core, XeWeCore, libraries, modules checkout, `out/`), `src/modules/` (with `Modules.h` and `modules.lock`) |
-| `xewe-os-core` | library sources, examples, `doc/`, `extras/`, `library.properties`, `library.json` | build output of examples and host tests |
-| `xewe-os-modules` | `modules/<slug>/`, `tools/validate.py`, `MODULES.md` | `__pycache__/`, `.pytest_cache/`, `build/`, `.venv/` |
+| `xewe-os` (and every project cloned from it) | `xewe-os.ino`, `Config.h`, `xewe.toml`, `src/<YourModule>/`, `setup.sh`, `run.sh`, docs, `.agents/`, `static/firmware/releases/` | `build/` (tools venv, XeWeCore, libraries, the generated `build/modules/` with `modules.lock`, `builds/<chip>/out/`), `src/Modules.h` |
+| `xewe-os-core` | library sources, examples, `doc/`, `tests/`, `library.properties`, `library.json` | build output of examples and host tests |
+| `xewe-os-modules` | `modules/<slug>/`, `tools/validate.py`, `libraries.toml`, `MODULES.md` | `__pycache__/`, `.pytest_cache/`, `build/`, `.venv/` |
 | `xewe-os-tools` | the package, its tests, `scripts/` | `.venv/`, `build/`, `*.egg-info/`, caches |
+
+arduino-cli, the esp32 core and the modules checkouts live outside every project, in the shared
+`~/.xewe-os/build-tools/`.
 
 Two generated files are committed on purpose: `library.json` (registries read it from the
 repository; regenerate it with `publish.py manifest`, never hand-edit) and `MODULES.md` (written by
@@ -57,19 +62,22 @@ them from there.
 | Repository | Version lives in | Tag | Notes |
 |---|---|---|---|
 | `xewe-os-core` | `library.properties` `version=` (mirrored into `library.json`) | `X.Y.Z`, un-prefixed | semver, published to the Arduino Library Manager |
-| `xewe-os-modules` | the repo tag; each module's `module.properties` `version=` is informational | `vX.Y.Z` | each module declares `requires_core=>=2.0.0,<3.0.0` (comma form) |
+| `xewe-os-modules` | the repo tag; each module's `module.properties` `version=` is informational | `vX.Y.Z` | each module declares `requires_core`, comma form (`>=2.1.0,<3.0.0`) |
 | `xewe-os-tools` | `pyproject.toml` | `vX.Y.Z` | |
-| `xewe-os` | `xewe.lock` `[project] version` | `vX.Y.Z`, optional | independent of the others |
+| `xewe-os` | `xewe.toml` `[project] version` | `vX.Y.Z`, optional | independent of the others |
 
-The template's `xewe.lock` pins one ref each for core, modules and tools, plus third-party
-libraries (`[libraries]`, ArduinoJson). `./setup.sh --latest` tries the newest tags without
-editing the lock; `xewe lock update` moves the pins. The full release flow is in
-[`git-and-releases.md`](git-and-releases.md).
+The template's `xewe.toml` names one ref each for core, modules and tools, plus third-party
+libraries (`[libraries]`, ArduinoJson). Until the ecosystem's `v3.0.0` tag set the refs are
+`latest` (the newest commit of each default branch); after it, `xewe manifest update` moves them to
+the newest tags, and `./setup.sh --latest` tries the newest tags without editing `xewe.toml`. The
+full release flow is in [`git-and-releases.md`](git-and-releases.md).
 
 ## Every repository has
 
 * `README.md`, see [`documentation.md`](documentation.md)
-* `AGENTS.md`, rules for coding agents (core keeps it at `doc/AGENTS.md`)
+* agent files: `.agents/` (the WAX workspace: `AGENTS.md` for how to work in the repository,
+  `RULES.md` whose project rules summarise these guidelines); the tools keep a root `AGENTS.md`.
+  See [`documentation.md`](documentation.md#agent-files)
 * `LICENSE.txt`: GPL-3.0-only, unless the repository states otherwise
 * `.gitignore`: at minimum `.DS_Store`, `.idea/`, `.vscode/`, and whatever that repository generates
 * `main` as the default branch
@@ -85,13 +93,14 @@ are in
 
 **Modules** see [`modules.md`](modules.md) and `xewe-os-modules/CONTRACT.md`.
 
-**Tools** is a self-contained Python package (`pyproject.toml`, `src/xewe/`, `tests/`). It never
-stores project data: it is installed into a project's `build/.venv`, and everything specific to the
-project stays in the project.
+**Tools** is a self-contained Python package (`pyproject.toml`, `src/`, `tests/`, `scripts/`). It
+never stores project data: it is installed into a project's `build/tools/.venv`, and everything
+specific to the project stays in the project. Its `scripts/setup.sh` and `scripts/run.sh` are the
+reference copies of the template's scripts.
 
 **Template** has the sketch and `Config.h` at the root, `setup.sh` and `run.sh` as thin wrappers
-around `xewe`, `xewe.lock`, `src/modules/` for generated module code, `build/` for everything
-installed, and `static/` for released binaries and media.
+around `xewe`, `xewe.toml`, project-local modules in `src/<Folder>/`, the generated `src/Modules.h`,
+`build/` for everything installed and generated, and `static/` for released binaries and media.
 
 ## Repository settings
 

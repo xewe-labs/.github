@@ -13,13 +13,13 @@ labels: bug
 **How to reproduce**
 <!-- Commands from a fresh project, one per line. For example:
 ./setup.sh --modules wifi,time
-build/.venv/bin/python -m xewe build --chip c3
-build/.venv/bin/python -m xewe serial --send '$time status'
+build/tools/.venv/bin/python -m xewe build --chip c3
+build/tools/.venv/bin/python -m xewe serial --send '$time status'
 -->
 
 **Versions**
-<!-- Paste `build/.venv/bin/python -m xewe lock show` (core, modules and tools refs) and the
-`[project] version` from xewe.lock. -->
+<!-- Paste `build/tools/.venv/bin/python -m xewe manifest show` (core, modules and tools refs) and the
+`[project] version` from xewe.toml. -->
 
 **Board**
 - Chip: <!-- c3 / c6 / s3, or "no board (compile only)" -->
@@ -27,7 +27,7 @@ build/.venv/bin/python -m xewe serial --send '$time status'
 - Host OS and arch: <!-- e.g. Linux arm64, macOS x86_64 -->
 
 **Modules selected**
-<!-- `build/.venv/bin/python -m xewe modules list` (the `*` rows). -->
+<!-- `build/tools/.venv/bin/python -m xewe modules list` (the `*` rows). -->
 
 **Anything else**
-<!-- Wiring, first-boot answers, whether NVS was erased. Do not paste Wi-Fi credentials. -->
+<!-- Wiring, first-boot answers, whether NVS was erased (`./run.sh` erases it; `--keep-nvs` keeps it). Do not paste Wi-Fi credentials. -->
