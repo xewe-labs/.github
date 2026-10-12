@@ -5,14 +5,14 @@ the formatter wins.
 
 ## Formatting
 
-None of the repositories carries a formatter configuration yet (`xewe-os-tools` `SPEC.md`, open
-point O10); until one does, match the rules below by hand.
+`xewe format` formats C and C++ with clang-format and the XeWe style that ships inside
+`xewe-os-tools` (`src/xewe/build/clang-format`), and Python with `ruff format`. No repository
+commits a `.clang-format`. `xewe format --check` is a blocking CI job in every repository.
 
-The style: four spaces and no tabs, no column
-limit (a signature or a comment banner stays on one line), attached braces, `Type* name` and
-`Type& name`, case labels indented under their `switch`, one constructor initializer per line with
-leading commas, and aligned columns for consecutive `#define`s, declarations and assignments.
-Include order is preserved, never sorted.
+The style: four spaces and no tabs, a 100-column limit, attached braces, `Type* name` and
+`Type& name`, and nothing column-aligned (no aligned `#define`s, declarations, assignments or
+trailing comments), so a one-line change diffs as one line. Include order is preserved, never
+sorted.
 
 ## Files and names
 
@@ -56,10 +56,10 @@ build, never by editing the file:
 ```
 
 Pass it as a compiler flag (`-DDEBUG_Wifi=1`, arduino-cli
-`--build-property "compiler.cpp.extra_flags=-DDEBUG_Wifi=1"`). `xewe build --define` is not a
-substitute: its values land in the generated `<XeWeBuildInfo.h>`, which the sketch's `Config.h`
-includes, so they never reach a module's `.cpp` files. XeWeCore reads that header only for
-`XEWE_TESTING` and `XEWE_DEVICE_NAME`.
+`--build-property "compiler.cpp.extra_flags=-DDEBUG_Wifi=1"`). A module also ships the switch in
+its `src/<Folder>/Config.h` as `XEWE_MODULE_<SLUG>_DEBUG` and defaults its `DEBUG_<Class>` to it;
+the project sets it in its own `Config.h`, which `xewe build` passes to every translation unit, or
+per build with `xewe build --define` (see the modules contract, section 3.2).
 
 ## Dependencies
 
@@ -97,9 +97,9 @@ Also avoid `Serial.printf`: it is not on the `Print` class for AVR, SAMD or STM3
 ## What "done" means
 
 Code compiles for ESP32-C3, C6 and S3 before it is committed: XeWeCore through its examples
-(`publish.py check`) and its host tests (`tests/unit/run.sh`), a module through `xewe test --module <slug>
+(its `doc/tests.md`) and its host tests (`tests/unit/run.sh`), a module through `xewe test --module <slug>
 --all-chips` in an `xewe-os` harness, firmware through `xewe build --all-chips`, all with 0
-warnings. A library that declares architectures beyond `esp32` also passes the host portability
+warnings, and `xewe format --check` is clean. A library that declares architectures beyond `esp32` also passes the host portability
 check (`publish.py check`: C++17, `-fno-exceptions`, `-fno-rtti`, against a minimal Arduino shim),
 which is the only automated evidence behind a non-ESP32 claim.
 

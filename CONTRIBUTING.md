@@ -8,7 +8,7 @@ with its own `CONTRIBUTING.md` overrides this one.
 * **A module?** You do not need access to this organization. Open a module proposal issue on
   [xewe-os-modules](https://github.com/xewe-labs/xewe-os-modules), then a pull request adding
   `modules/<slug>/` to it. Rules in
-  [`CONTRACT.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/CONTRACT.md), summarised in
+  [`doc/contract.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/contract.md), summarised in
   [`guidelines/modules.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/modules.md).
 * **A change to existing code?** Open an issue first when the change is large, changes behaviour
   people depend on, or touches more than one repository. Small fixes can go straight to a pull
@@ -20,8 +20,8 @@ with its own `CONTRIBUTING.md` overrides this one.
    `xewe-os` template as the harness. Its setup takes local checkouts instead of the pinned refs:
    `./setup.sh --core-source ../xewe-os-core --modules-source ../xewe-os-modules`, and
    `XEWE_TOOLS_SOURCE=../xewe-os-tools` for the tools (`XEWE_CORE_SOURCE` and
-   `XEWE_MODULES_SOURCE` are the environment forms). The publishing tool discovers the library
-   as a sibling folder.
+   `XEWE_MODULES_SOURCE` are the environment forms). `./setup.sh` writes `./run.sh`, which is never
+   committed.
 2. Branch off `main`.
 3. Follow [`guidelines/cpp-style.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/cpp-style.md) for C++ and
    [`guidelines/git-and-releases.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/git-and-releases.md) for commits and versions.
@@ -31,12 +31,14 @@ with its own `CONTRIBUTING.md` overrides this one.
 
 ## Before opening a pull request
 
-* **It builds.** Everything compiles for ESP32-C3, C6 and S3 with 0 warnings, locally (there is
-  no CI): firmware with `build/tools/.venv/bin/python -m xewe build --all-chips`, a module with
+* **It builds.** Everything compiles for ESP32-C3, C6 and S3 with 0 warnings: firmware with
+  `./setup.sh` then `build/tools/.venv/bin/python -m xewe build --all-chips`, a module with
   `xewe test --module <slug> --all-chips` in a harness plus `tools/validate.py`, XeWeCore with
-  `publish.py check xewe-os-core` and `tests/unit/run.sh`, the tools with their pytest suite.
-* **It is formatted** to [`guidelines/cpp-style.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/cpp-style.md).
-* **Generated files are not committed.** `build/`, `src/Modules.h`, `.venv/` and
+  its host tests (`tests/unit/run.sh`) and its examples (`doc/tests.md`), the tools with their
+  pytest suite. CI runs the same checks on every push and pull request and must be green.
+* **It is formatted** with `xewe format` and passes `xewe brand-lint`; CI blocks on both. See
+  [`guidelines/cpp-style.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/cpp-style.md).
+* **Generated files are not committed.** `build/`, `src/Modules.h`, `run.sh`, `.venv/` and
   caches stay out of git. See each repository's `.gitignore`.
 * **Say what you tested.** Which boards, which commands, what you did not test.
 

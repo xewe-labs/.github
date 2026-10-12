@@ -5,14 +5,15 @@ repository, each linking the others. -->
 
 **Checklist**
 - [ ] Builds for all three chips with 0 warnings: `build/tools/.venv/bin/python -m xewe build --all-chips`
-      (core: `publish.py check xewe-os-core`; modules: `xewe test --module <slug> --all-chips` in a harness)
-- [ ] Modules: `tools/validate.py --harness <harness>` exits 0, and `MODULES.md` is regenerated if metadata changed
+      (core: `tests/unit/run.sh` and the examples; modules: `xewe test --module <slug> --all-chips` in a harness)
+- [ ] `xewe format --check` and `xewe brand-lint` pass, and CI is green
+- [ ] Modules: `tools/validate.py --harness <harness>` exits 0, and `doc/modules.md` is regenerated if metadata changed
 - [ ] Tests added or updated (a module has `test_compiles`, `test_status` and one behaviour test;
       core logic gets a host test in `tests/unit/`; the tools get pytest cases)
-- [ ] No generated files committed: nothing from `build/`, `src/Modules.h`, `.venv/` or
+- [ ] No generated files committed: nothing from `build/`, `src/Modules.h`, `run.sh`, `.venv/` or
       caches
-- [ ] README / `.agents/` / `CONTRACT.md` updated in this pull request where behaviour changed
-- [ ] Versions: no hand bump of XeWeCore; module `version` bumped for command changes; `xewe.toml`
+- [ ] README / `doc/` / `.agents/` (modules: `doc/contract.md`) updated in this pull request where behaviour changed
+- [ ] Versions: no hand bump; versions change only through `scripts/release.sh --prepare`; `xewe.toml`
       refs untouched unless this pull request moves one on purpose
 
 **What I tested**

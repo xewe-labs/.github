@@ -17,33 +17,36 @@ Pick the level that fits:
 | 3 | the [**xewe-os**](https://github.com/xewe-labs/xewe-os) template and the `xewe` tools | clone it, `./setup.sh`, `./run.sh`: ready-made modules, multi-chip builds, board tests, releases |
 
 The template's [README](https://github.com/xewe-labs/xewe-os#readme) covers the first five minutes;
-[ARCHITECTURE.md](https://github.com/xewe-labs/xewe-os/blob/main/ARCHITECTURE.md) explains why it
-is shaped this way.
+[doc/architecture.md](https://github.com/xewe-labs/xewe-os/blob/main/doc/architecture.md) explains
+why it is shaped this way.
 
 ## XeWe OS
 
-| Repository | |
-|---|---|
-| [`xewe-os`](https://github.com/xewe-labs/xewe-os) | the firmware template you clone (or "Use this template"); holds only your code and `xewe.toml` |
-| [`xewe-os-core`](https://github.com/xewe-labs/xewe-os-core) | `XeWeCore`, the Arduino library: serial console, CLI, NVS storage, helpers and the module system |
-| [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules) | every module in one repo: Wi-Fi, web interface, time, scheduler, buttons, pins, LED, fan, MLX90614 sensor |
-| [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) | `xewe`, one Python tool for setup, build, flash, serial, provisioning and test |
-| [`publish-arduino-library`](https://github.com/xewe-labs/publish-arduino-library) | checks and releases Arduino libraries; used to publish `XeWeCore` |
+| Repository | Release | |
+|---|---|---|
+| [`xewe-os`](https://github.com/xewe-labs/xewe-os) | [`3.0.0`](https://github.com/xewe-labs/xewe-os/releases/tag/3.0.0) | the firmware template you clone (or "Use this template"); holds only your code and `xewe.toml` |
+| [`xewe-os-core`](https://github.com/xewe-labs/xewe-os-core) | [`3.0.0`](https://github.com/xewe-labs/xewe-os-core/releases/tag/3.0.0) | `XeWeCore`, the Arduino library: serial console, CLI, NVS storage, helpers and the module system |
+| [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules) | [`3.0.0`](https://github.com/xewe-labs/xewe-os-modules/releases/tag/3.0.0) | every module in one repo: Wi-Fi, web interface, time, scheduler, buttons, pins |
+| [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) | [`3.0.1`](https://github.com/xewe-labs/xewe-os-tools/releases/tag/3.0.1) | `xewe`, one Python tool for setup, build, flash, serial, provisioning, test, format and release, plus the CI workflows |
+| [`publish-arduino-library`](https://github.com/xewe-labs/publish-arduino-library) | | checks Arduino libraries; kept as a separate, generic tool |
 
 Boards: ESP32-C3, ESP32-C6 and ESP32-S3. Flashing is over serial only (no OTA).
 
-There is no CI on purpose for now. Builds and tests run locally through `xewe-os-tools`, which
-compiles for all three chips (`xewe build --all-chips`) and runs the tests with or without a board.
+Builds and tests run the same way on a laptop and in CI: `xewe-os-tools` compiles for all three
+chips (`xewe build --all-chips`) and runs the tests with or without a board, and its reusable
+GitHub Actions workflows run those commands on every push; the format check (`xewe format`) and
+`xewe brand-lint` are blocking jobs. A template release tag builds c3, c6 and s3 and publishes the
+binaries as a GitHub Release.
 
 ## Why it is shaped this way
 
 The four repos split along one line: what you clone (`xewe-os`), what you build on (`xewe-os-core`),
 what you pick (`xewe-os-modules`) and what builds it (`xewe-os-tools`). A project's `xewe.toml`
-names one ref of each of the other three. Today those refs are `latest`, the newest commit of each
-default branch; every repository is tagged `v3.0.0` together, and from then on a project freezes
-its refs at tags so it builds the same way next year. The decisions behind this and the version
-policy are in
-[xewe-os/ARCHITECTURE.md](https://github.com/xewe-labs/xewe-os/blob/main/ARCHITECTURE.md).
+names one ref of each of the other three. The repositories were tagged `3.0.0` together, and the
+template pins those tags (tools `3.0.1`), so a project builds the same way next year;
+`xewe manifest update` moves it to newer tags. The decisions behind this and the version policy
+are in
+[xewe-os/doc/architecture.md](https://github.com/xewe-labs/xewe-os/blob/main/doc/architecture.md).
 
 ## Products
 
@@ -58,7 +61,7 @@ policy are in
 Rules and guidelines live in [`.github`](https://github.com/xewe-labs/.github). Start with its
 [CONTRIBUTING.md](https://github.com/xewe-labs/.github/blob/main/CONTRIBUTING.md); a new module
 starts with a [module proposal](https://github.com/xewe-labs/xewe-os-modules/issues/new?template=module_proposal.md)
-and follows [CONTRACT.md](https://github.com/xewe-labs/xewe-os-modules/blob/main/CONTRACT.md).
+and follows [doc/contract.md](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/contract.md).
 See [`guidelines/repositories.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/repositories.md)
 for what belongs in which repository and how each is released.
 

@@ -47,12 +47,12 @@ way: level 1 is XeWeCore from the Arduino Library Manager (example `01_Hello`), 
 module of your own in the sketch folder (example `02_MyModule`), level 3 is the `xewe-os` template
 with ready-made modules and the `xewe` tools. XeWeCore's `doc/README.md` is the reference text;
 others link to it. Why the ecosystem is shaped the way it is goes in
-`xewe-os/ARCHITECTURE.md`, not in every README.
+`xewe-os/doc/architecture.md`, not in every README.
 
 ## Agent files
 
 A repository that an agent works in carries its agent files in `.agents/`, the WAX agentic
-workspace (installed with its `wax_init` skill; core, modules and the template have it):
+workspace (installed with its `wax_init` skill; all four xewe-os repositories have it):
 
 * `.agents/AGENTS.md`: the WAX entry text, then a project section: how to work in the repository
   (setup, build, flash and test commands, the generated files never to edit, `XEWE_NO_BOARD`, local
@@ -62,8 +62,8 @@ workspace (installed with its `wax_init` skill; core, modules and the template h
   difference is fixed in the repository's `RULES.md`.
 * `PREFERENCES.md`, `handoffs/` and `skills/` as WAX ships them.
 
-There is no root `AGENTS.md` next to `.agents/`. A repository without `.agents/` (the tools,
-`publish-arduino-library`) keeps a root `AGENTS.md` or `CLAUDE.md`. Agent files are short and
+There is no root `AGENTS.md` next to `.agents/`. A repository without `.agents/`
+(`publish-arduino-library`) keeps a root `AGENTS.md` or `CLAUDE.md`. Agent files are short and
 prescriptive and do not repeat the README. Organization-wide agent rules are in
 [`../AGENTS.md`](../AGENTS.md).
 
