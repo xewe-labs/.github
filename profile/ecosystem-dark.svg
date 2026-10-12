@@ -1,28 +1,35 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="456" viewBox="0 0 960 456" role="img" aria-labelledby="title desc">
 <title id="title">xewe-os ecosystem</title>
-<desc id="desc">xewe-os-core (XeWeCore library), xewe-os-modules (validated, tested modules) and xewe-os-tools (the xewe CLI) come together in xewe-os, the template. xewe-led-os and xewe-chiller-os are built on it, each with project-local modules in src/.</desc>
-<rect width="960" height="420" rx="24" fill="#0A0A0B"/>
+<desc id="desc">From the top, xewe-os-core (XeWeCore library), xewe-os-modules (validated, tested modules) and your custom project-local modules in src/ flow into xewe-os, the template; xewe-os-tools (the xewe CLI) enters from the side. xewe-led-os and xewe-chiller-os are built on xewe-os.</desc>
+<rect width="960" height="456" rx="24" fill="#0A0A0B"/>
+<defs>
+  <marker id="a-line" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1L7.5 4L1 7" fill="none" stroke="#48484A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="a-accent" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1L7.5 4L1 7" fill="none" stroke="#2997FF" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
 <g fill="none" stroke-width="1">
-  <path d="M190 110C190 133 424 133 424 156" stroke="#48484A"/>
-  <path d="M480 110C480 133 480 133 480 156" stroke="#48484A"/>
-  <path d="M770 110C770 133 536 133 536 156" stroke="#48484A"/>
-  <path d="M424 260C424 286 300 286 300 312" stroke="#2997FF"/>
-  <path d="M536 260C536 286 660 286 660 312" stroke="#2997FF"/>
+  <path d="M134 112C134 144 328 144 328 176" stroke="#48484A" marker-end="url(#a-line)"/>
+  <path d="M384 112C384 144 384 144 384 176" stroke="#48484A" marker-end="url(#a-line)"/>
+  <path d="M634 112C634 144 440 144 440 176" stroke="#48484A" marker-end="url(#a-line)"/>
+  <path d="M626 228H544" stroke="#48484A" marker-end="url(#a-line)"/>
+  <path d="M328 280C328 312 204 312 204 344" stroke="#2997FF" marker-end="url(#a-accent)"/>
+  <path d="M440 280C440 312 564 312 564 344" stroke="#2997FF" marker-end="url(#a-accent)"/>
 </g>
-<rect x="312" y="156" width="336" height="104" rx="18" fill="#2C2C2E"/>
+<rect x="224" y="176" width="320" height="104" rx="18" fill="#2C2C2E"/>
 <g font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
-  <text x="190" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os-core</text>
-  <text x="190" y="92" font-size="13" font-weight="400" fill="#8E8E93">XeWeCore library</text>
-  <text x="480" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os-modules</text>
-  <text x="480" y="92" font-size="13" font-weight="400" fill="#8E8E93">Validated, tested modules</text>
-  <text x="770" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os-tools</text>
-  <text x="770" y="92" font-size="13" font-weight="400" fill="#8E8E93">xewe CLI: setup, build, flash, test, release</text>
-  <text x="480" y="196" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os</text>
-  <text x="480" y="220" font-size="13" font-weight="400" fill="#A1A1A6">Template</text>
-  <text x="480" y="238" font-size="13" font-weight="400" fill="#A1A1A6">xewe.toml pins versions, setup.sh, run.sh</text>
-  <text x="300" y="340" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-led-os</text>
-  <text x="300" y="364" font-size="13" font-weight="400" fill="#8E8E93">+ project-local modules in src/</text>
-  <text x="660" y="340" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-chiller-os</text>
-  <text x="660" y="364" font-size="13" font-weight="400" fill="#8E8E93">+ project-local modules in src/</text>
+  <text x="134" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os-core</text>
+  <text x="134" y="92" font-size="13" font-weight="400" fill="#8E8E93">XeWeCore library</text>
+  <text x="384" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os-modules</text>
+  <text x="384" y="92" font-size="13" font-weight="400" fill="#8E8E93">Validated, tested modules</text>
+  <text x="634" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">custom modules</text>
+  <text x="634" y="92" font-size="13" font-weight="400" fill="#8E8E93">project-local, in src/</text>
+  <text x="384" y="216" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os</text>
+  <text x="384" y="240" font-size="13" font-weight="400" fill="#A1A1A6">Template</text>
+  <text x="384" y="258" font-size="13" font-weight="400" fill="#A1A1A6">xewe.toml pins versions, setup.sh, run.sh</text>
+  <text x="640" y="222" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2" text-anchor="start">xewe-os-tools</text>
+  <text x="640" y="246" font-size="13" font-weight="400" fill="#8E8E93" text-anchor="start">xewe CLI: setup, build, flash, test, release</text>
+  <text x="204" y="374" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-led-os</text>
+  <text x="204" y="398" font-size="13" font-weight="400" fill="#8E8E93">LED strip firmware</text>
+  <text x="564" y="374" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-chiller-os</text>
+  <text x="564" y="398" font-size="13" font-weight="400" fill="#8E8E93">laptop cooling pad firmware</text>
 </g>
 </svg>
