@@ -1,66 +1,78 @@
-# XeWe Labs
+# xewe-os ecosystem
 
-XeWe is a small ecosystem for ESP32-C3, -C6 and -S3 firmware that you control from a command
-line, over serial or over the network. You clone one template, pick modules, and build with one
-local tool. A module is a piece of code someone (often a coding agent) figured out once, so nobody
-has to figure it out again. Humans and agents use the same commands, and everything still works
-with no board attached: builds compile and tests report "compiled, not run".
+Firmware always contains reusable bits and pieces. xewe-os builds on this fact with a philosophy of
+a highly modular framework that is ready for agent-first development.
 
-## Start here
+What it has: [`xewe-os-core`](https://github.com/xewe-labs/xewe-os-core) contains the core
+functions, such as serial port interaction, the CLI engine, memory storage and others. Then there
+is a module repo, [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules), that has
+validated and tested modules. For example, need buttons? Install buttons. Need LED control or a
+fan? Install the module. Then, to build and test it, we have
+[`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools). It also contains some dev tools for
+rapid prototyping, but its primary purpose is to compile and test the code. It all comes together
+with [`xewe-os`](https://github.com/xewe-labs/xewe-os), a template that pulls the core, the modules
+of your choice and the build tools together. With only two commands, `setup.sh` and `run.sh`, you
+can go from an idea to flashed firmware.
 
-Pick the level that fits:
+```mermaid
+graph TD
+    core["xewe-os-core<br/>XeWeCore library"]
+    modules["xewe-os-modules<br/>modules/&lt;slug&gt;, validated and tested"]
+    tools["xewe-os-tools<br/>xewe CLI: setup, build, flash, test, release"]
+    os["xewe-os<br/>template / harness<br/>xewe.toml pins versions, setup.sh, run.sh"]
+    led["xewe-led-os<br/>+ project-local modules in src/"]
+    chiller["xewe-chiller-os<br/>+ project-local modules in src/"]
+    core --> os
+    modules --> os
+    tools --> os
+    os --> led
+    os --> chiller
+```
 
-| Level | You use | Start with |
-|---|---|---|
-| 1 | the Arduino IDE: Library Manager → `XeWeCore` | the console, NVS and prompts: example [`01_Hello`](https://github.com/xewe-labs/xewe-os-core/tree/main/examples/01_Hello) |
-| 2 | the same, plus one module of your own in the sketch folder | example [`02_MyModule`](https://github.com/xewe-labs/xewe-os-core/tree/main/examples/02_MyModule) |
-| 3 | the [**xewe-os**](https://github.com/xewe-labs/xewe-os) template and the `xewe` tools | clone it, `./setup.sh`, `./run.sh`: ready-made modules, multi-chip builds, board tests, releases |
+## Releases and CI/CD
 
-The template's [README](https://github.com/xewe-labs/xewe-os#readme) covers the first five minutes;
-[doc/architecture.md](https://github.com/xewe-labs/xewe-os/blob/main/doc/architecture.md) explains
-why it is shaped this way.
+Every release has a generated `release_card.md`: release notes, metadata, validator output, one
+row per test with its result (hardware runs are marked apart from compile-only ones), plus the
+logs. v3 marks the ecosystem unification.
 
-## XeWe OS
+* `xewe-os-tools`: no binaries, just the release tag.
+* `xewe-os-core`: no binaries, just the release tag; its release card lists the unit and on-board
+  tests, one test per row with its result.
+* `xewe-os-modules`: a release per module (a `release_card.md` per module) and a set tag; still no
+  binaries.
+* `xewe-os`: release tags for the harness, plus precompiled binaries published as GitHub Release
+  assets (never committed to git). Flashable from [maxdokukin.com](https://maxdokukin.com), and
+  later from GitHub Pages.
 
-| Repository | Release | |
-|---|---|---|
-| [`xewe-os`](https://github.com/xewe-labs/xewe-os) | [`3.0.0`](https://github.com/xewe-labs/xewe-os/releases/tag/3.0.0) | the firmware template you clone (or "Use this template"); holds only your code and `xewe.toml` |
-| [`xewe-os-core`](https://github.com/xewe-labs/xewe-os-core) | [`3.0.0`](https://github.com/xewe-labs/xewe-os-core/releases/tag/3.0.0) | `XeWeCore`, the Arduino library: serial console, CLI, NVS storage, helpers and the module system |
-| [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules) | [`3.0.0`](https://github.com/xewe-labs/xewe-os-modules/releases/tag/3.0.0) | every module in one repo: Wi-Fi, web interface, time, scheduler, buttons, pins |
-| [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) | [`3.0.1`](https://github.com/xewe-labs/xewe-os-tools/releases/tag/3.0.1) | `xewe`, one Python tool for setup, build, flash, serial, provisioning, test, format and release, plus the CI workflows and `xewe webui` (a device web UI prototyped in Flask, exported to firmware) |
+From this ecosystem emerge xewe-led-os and xewe-chiller-os.
 
-Boards: ESP32-C3, ESP32-C6 and ESP32-S3. Flashing is over serial only (no OTA).
+## xewe-led-os
 
-Builds and tests run the same way on a laptop and in CI: `xewe-os-tools` compiles for all three
-chips (`xewe build --all-chips`) and runs the tests with or without a board, and its reusable
-GitHub Actions workflows run those commands on every push; the format check (`xewe format`) and
-`xewe brand-lint` are blocking jobs. A template release tag builds c3, c6 and s3 and publishes the
-binaries as a GitHub Release.
+[`xewe-led-os`](https://github.com/xewe-labs/xewe-led-os) is the LED strip firmware for ESP32-C3,
+-C6 and -S3: every FastLED chipset selectable at runtime, 7 effects, a web page, HomeKit, Alexa,
+Home Assistant, schedules and buttons. It is built on xewe-os 3.0 with the `led` and `led-web`
+modules plus its own project-local modules.
 
-## Why it is shaped this way
+Status: 3.0 is on branch `v3`, hardware verification in progress; the 2.x history is kept under
+the `v2.3.0` tag.
 
-The four repos split along one line: what you clone (`xewe-os`), what you build on (`xewe-os-core`),
-what you pick (`xewe-os-modules`) and what builds it (`xewe-os-tools`). A project's `xewe.toml`
-names one ref of each of the other three. The repositories were tagged `3.0.0` together, and the
-template pins those tags (tools `3.0.1`), so a project builds the same way next year;
-`xewe manifest update` moves it to newer tags. The decisions behind this and the version policy
-are in
-[xewe-os/doc/architecture.md](https://github.com/xewe-labs/xewe-os/blob/main/doc/architecture.md).
+## xewe-chiller-os
 
-## Products
+The laptop cooling pad firmware (fan, temperature and LED), currently
+[`xewe-os-laptop-cooling-pad`](https://github.com/xewe-labs/xewe-os-laptop-cooling-pad). It will
+be rebranded xewe-chiller-os and migrated to xewe-os 3.0 the same way.
 
-| Repository | |
-|---|---|
-| [`xewe-led-os`](https://github.com/xewe-labs/xewe-led-os) | the flagship: firmware for addressable LED devices. It moves onto xewe-os once the backbone has proven itself |
-| [`xewe-led-os-homeassistant`](https://github.com/xewe-labs/xewe-led-os-homeassistant) | Home Assistant integration for a XeWe LED dock |
+## Links
 
-## Contributing
-
-Rules and guidelines live in [`.github`](https://github.com/xewe-labs/.github). Start with its
-[CONTRIBUTING.md](https://github.com/xewe-labs/.github/blob/main/CONTRIBUTING.md); a new module
-starts with a [module proposal](https://github.com/xewe-labs/xewe-os-modules/issues/new?template=module_proposal.md)
-and follows [doc/contract.md](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/contract.md).
-See [`guidelines/repositories.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/repositories.md)
-for what belongs in which repository and how each is released.
+* Ecosystem: [`xewe-os`](https://github.com/xewe-labs/xewe-os) ·
+  [`xewe-os-core`](https://github.com/xewe-labs/xewe-os-core) ·
+  [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules) ·
+  [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools)
+* Why it is shaped this way: [xewe-os/doc/architecture.md](https://github.com/xewe-labs/xewe-os/blob/main/doc/architecture.md)
+* Arduino IDE only? Install `XeWeCore` from the Library Manager and start with the
+  [`01_Hello`](https://github.com/xewe-labs/xewe-os-core/tree/main/examples/01_Hello) example.
+* Home Assistant integration: [`xewe-led-os-homeassistant`](https://github.com/xewe-labs/xewe-led-os-homeassistant)
+* Contributing: [CONTRIBUTING.md](https://github.com/xewe-labs/.github/blob/main/CONTRIBUTING.md);
+  a new module starts with a [module proposal](https://github.com/xewe-labs/xewe-os-modules/issues/new?template=module_proposal.md).
 
 Everything here is GPL-3.0-only unless a repository says otherwise.
