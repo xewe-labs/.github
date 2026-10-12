@@ -14,8 +14,7 @@ human runs.
 | `xewe-os` | the firmware template users clone; holds only its own code and `xewe.toml` | [`.agents/AGENTS.md`](https://github.com/xewe-labs/xewe-os/blob/main/.agents/AGENTS.md) |
 | `xewe-os-core` | the `XeWeCore` Arduino library (utils, serial, cli, nvs, `XeWeOs`, `xewe::Module`) | [`.agents/AGENTS.md`](https://github.com/xewe-labs/xewe-os-core/blob/main/.agents/AGENTS.md) |
 | `xewe-os-modules` | every module, `modules/<slug>/`, plus `doc/contract.md` and `tools/validate.py` | [`.agents/AGENTS.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/.agents/AGENTS.md) |
-| `xewe-os-tools` | `xewe`: setup, build, flash, serial, provision, test, boards, modules, manifest, format, brand-lint, release; the reusable CI workflows | [`.agents/AGENTS.md`](https://github.com/xewe-labs/xewe-os-tools/blob/main/.agents/AGENTS.md) |
-| `publish-arduino-library` | a generic Arduino-library checker; XeWeCore releases with its own `scripts/release.sh` | its `CLAUDE.md` |
+| `xewe-os-tools` | `xewe`: setup, build, flash, serial, provision, test, boards, modules, manifest, format, brand-lint, release, webui; the reusable CI workflows | [`.agents/AGENTS.md`](https://github.com/xewe-labs/xewe-os-tools/blob/main/.agents/AGENTS.md) |
 | `.github` | this repository: organization guidelines, profile, issue templates | this file |
 
 Why it is shaped this way:

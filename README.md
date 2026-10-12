@@ -22,8 +22,8 @@ is ordinary documentation: it is the single place the rules live, and other repo
 
 Rules that belong to one tool stay with that tool and are linked from here:
 
-* Arduino library rules: [`publish-arduino-library/docs/library-rules.md`](https://github.com/xewe-labs/publish-arduino-library/blob/main/docs/library-rules.md)
-* Setup, build, flash, serial, test, format and release: [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) ([`doc/spec.md`](https://github.com/xewe-labs/xewe-os-tools/blob/main/doc/spec.md))
+* Arduino library rules: [`xewe-os-core/doc/library-rules.md`](https://github.com/xewe-labs/xewe-os-core/blob/main/doc/library-rules.md)
+* Setup, build, flash, serial, test, format, release and web UI export: [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) ([`doc/spec.md`](https://github.com/xewe-labs/xewe-os-tools/blob/main/doc/spec.md))
 * CI workflows: [`xewe-os-tools/doc/ci.md`](https://github.com/xewe-labs/xewe-os-tools/blob/main/doc/ci.md)
 * The module contract and how to add a module: [`xewe-os-modules/doc/contract.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/contract.md)
 * Why the ecosystem is shaped this way: [`xewe-os/doc/architecture.md`](https://github.com/xewe-labs/xewe-os/blob/main/doc/architecture.md)

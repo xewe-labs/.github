@@ -99,9 +99,8 @@ Also avoid `Serial.printf`: it is not on the `Print` class for AVR, SAMD or STM3
 Code compiles for ESP32-C3, C6 and S3 before it is committed: XeWeCore through its examples
 (its `doc/tests.md`) and its host tests (`tests/unit/run.sh`), a module through `xewe test --module <slug>
 --all-chips` in an `xewe-os` harness, firmware through `xewe build --all-chips`, all with 0
-warnings, and `xewe format --check` is clean. A library that declares architectures beyond `esp32` also passes the host portability
-check (`publish.py check`: C++17, `-fno-exceptions`, `-fno-rtti`, against a minimal Arduino shim),
-which is the only automated evidence behind a non-ESP32 claim.
+warnings, and `xewe format --check` is clean. XeWeCore's `architectures=` names only what its
+examples are compiled for ([`xewe-os-core/doc/library-rules.md`](https://github.com/xewe-labs/xewe-os-core/blob/main/doc/library-rules.md)).
 
 ## Comments
 

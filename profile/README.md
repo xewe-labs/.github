@@ -27,8 +27,7 @@ why it is shaped this way.
 | [`xewe-os`](https://github.com/xewe-labs/xewe-os) | [`3.0.0`](https://github.com/xewe-labs/xewe-os/releases/tag/3.0.0) | the firmware template you clone (or "Use this template"); holds only your code and `xewe.toml` |
 | [`xewe-os-core`](https://github.com/xewe-labs/xewe-os-core) | [`3.0.0`](https://github.com/xewe-labs/xewe-os-core/releases/tag/3.0.0) | `XeWeCore`, the Arduino library: serial console, CLI, NVS storage, helpers and the module system |
 | [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules) | [`3.0.0`](https://github.com/xewe-labs/xewe-os-modules/releases/tag/3.0.0) | every module in one repo: Wi-Fi, web interface, time, scheduler, buttons, pins |
-| [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) | [`3.0.1`](https://github.com/xewe-labs/xewe-os-tools/releases/tag/3.0.1) | `xewe`, one Python tool for setup, build, flash, serial, provisioning, test, format and release, plus the CI workflows |
-| [`publish-arduino-library`](https://github.com/xewe-labs/publish-arduino-library) | | checks Arduino libraries; kept as a separate, generic tool |
+| [`xewe-os-tools`](https://github.com/xewe-labs/xewe-os-tools) | [`3.0.1`](https://github.com/xewe-labs/xewe-os-tools/releases/tag/3.0.1) | `xewe`, one Python tool for setup, build, flash, serial, provisioning, test, format and release, plus the CI workflows and `xewe webui` (a device web UI prototyped in Flask, exported to firmware) |
 
 Boards: ESP32-C3, ESP32-C6 and ESP32-S3. Flashing is over serial only (no OTA).
 
@@ -54,7 +53,6 @@ are in
 |---|---|
 | [`xewe-led-os`](https://github.com/xewe-labs/xewe-led-os) | the flagship: firmware for addressable LED devices. It moves onto xewe-os once the backbone has proven itself |
 | [`xewe-led-os-homeassistant`](https://github.com/xewe-labs/xewe-led-os-homeassistant) | Home Assistant integration for a XeWe LED dock |
-| [`xewe-os-frontend-builder`](https://github.com/xewe-labs/xewe-os-frontend-builder) | prototype a device web interface as a Flask app, export it into a sketch |
 
 ## Contributing
 

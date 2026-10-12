@@ -95,7 +95,7 @@ Every repository releases the same way, with its own `scripts/release.sh`:
 
 | Repository | Local checks (stage 3) | Stages 4 and 5 |
 |---|---|---|
-| `xewe-os-core` | `tests/unit/run.sh`, `xewe format --check` | creates the GitHub Release; the Arduino Library Manager picks the new tag up by itself (the library is registered). `publish-arduino-library` is not the release path |
+| `xewe-os-core` | `tests/unit/run.sh`, `xewe format --check` | creates the GitHub Release; the Arduino Library Manager picks the new tag up by itself (the library is registered) |
 | `xewe-os-modules` | `tools/validate.py`, the module's unit tests | per module: `--prepare <version> <module>`, then `scripts/release.sh <version> <module>` tags `<module>/<version>` with its own GitHub Release (files in `modules/<module>/releases/<version>/`). After every module: `--prepare <version> --set`, then `scripts/release.sh <version> --set` checks every module is released at `<version>` and tags the set `<version>`, which projects pin and the tools fetch |
 | `xewe-os-tools` | the pytest suite | creates the GitHub Release; consumers move `[tools] ref` and their workflow callers (`@X.Y.Z`) to it |
 | `xewe-os` (and every firmware built from it) | `xewe test --no-board`, `xewe build` for c3 | the tag message is `notes.txt`; the tag must equal `[project] version`. CI (`ci.yml` → `xewe-release.yml`) builds and publishes the release (below); the script waits for that run, attaches `testcard.md` and checks the assets and the release commit. `X.Y.Z-<suffix>` tags are pre-releases |

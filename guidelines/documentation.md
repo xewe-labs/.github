@@ -62,8 +62,8 @@ workspace (installed with its `wax_init` skill; all four xewe-os repositories ha
   difference is fixed in the repository's `RULES.md`.
 * `PREFERENCES.md`, `handoffs/` and `skills/` as WAX ships them.
 
-There is no root `AGENTS.md` next to `.agents/`. A repository without `.agents/`
-(`publish-arduino-library`) keeps a root `AGENTS.md` or `CLAUDE.md`. Agent files are short and
+There is no root `AGENTS.md` next to `.agents/`. A repository without `.agents/` keeps a root
+`AGENTS.md` or `CLAUDE.md`. Agent files are short and
 prescriptive and do not repeat the README. Organization-wide agent rules are in
 [`../AGENTS.md`](../AGENTS.md).
 
@@ -82,7 +82,7 @@ History lives in the workspace's own records and in git, not in the repositories
 |---|---|
 | How to use or build this repository | its `README.md` |
 | Rules for everything in the organization | `.github/guidelines/` |
-| Rules a tool enforces | with that tool (for example `publish-arduino-library/docs/library-rules.md`) |
+| Rules a tool enforces | with that tool or the repository it checks (for example `xewe-os-core/doc/library-rules.md`, checked by `arduino-lint`) |
 | Instructions for agents | `.agents/AGENTS.md` and `.agents/RULES.md` in each repository (a root `AGENTS.md` where there is no `.agents/`), plus `.github/AGENTS.md` |
 | Anything longer than a README section | a `doc/` folder in the repository it belongs to, linked from that README |
 

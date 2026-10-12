@@ -9,9 +9,8 @@ Why the split is drawn this way is in
 |---|---|---|---|
 | `xewe-os-core` | the `XeWeCore` Arduino library | reusable code every firmware needs: utils, serial console, CLI, NVS/FlexData, the `XeWeOs` facade and `xewe::Module` | semver tag `X.Y.Z` (no `v`) by `scripts/release.sh`; the Arduino Library Manager picks the tag up |
 | `xewe-os-modules` | every module, under `modules/<slug>/` | code figured out once: one feature (WiFi, a schedule, a sensor) a firmware can select | per-module tags `<module>/X.Y.Z` and the set tag `X.Y.Z`, by `scripts/release.sh`; each module declares `requires_core` |
-| `xewe-os-tools` | the Python package `xewe` | everything that builds, flashes, talks to or tests a board: setup, build, flash, serial, provision, test, boards, modules, manifest, format, brand-lint, release; the reusable CI workflows | tag `X.Y.Z` by `scripts/release.sh` |
+| `xewe-os-tools` | the Python package `xewe` | everything that builds, flashes, talks to or tests a board: setup, build, flash, serial, provision, test, boards, modules, manifest, format, brand-lint, release, webui (Flask web UI prototype → PROGMEM headers); the reusable CI workflows | tag `X.Y.Z` by `scripts/release.sh` |
 | `xewe-os` | the firmware template (a GitHub template repository) | the thing users clone: sketch, `Config.h`, `xewe.toml`, two example modules, `setup.sh`, docs | its own version in `xewe.toml [project]`, tag `X.Y.Z` by `scripts/release.sh`; CI builds the firmware, publishes a GitHub Release and commits the binaries to `main` |
-| `publish-arduino-library` | a generic Arduino-library publishing tool | checking Arduino libraries; XeWeCore releases with its own `scripts/release.sh` | not tagged |
 | `.github` | organization profile, guidelines, issue and pull request templates | rules that span repositories | not released |
 
 Rules of thumb:
@@ -98,9 +97,9 @@ Source files start with the header in [`license-header.txt`](license-header.txt)
 ## Repository layouts
 
 **Core** follows the Arduino library layout at the repo root, with one top-level header,
-`src/XeWeCore.h`, and everything else in `src/XeWeCore/`. The rules the publishing tool enforces
-are in
-[`publish-arduino-library/docs/library-rules.md`](https://github.com/xewe-labs/publish-arduino-library/blob/main/docs/library-rules.md).
+`src/XeWeCore.h`, and everything else in `src/XeWeCore/`. The Library Manager rules (checked by
+`arduino-lint` in its CI) are in
+[`xewe-os-core/doc/library-rules.md`](https://github.com/xewe-labs/xewe-os-core/blob/main/doc/library-rules.md).
 
 **Modules** see [`modules.md`](modules.md) and `xewe-os-modules/doc/contract.md`.
 
