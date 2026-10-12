@@ -14,20 +14,7 @@ with [`xewe-os`](https://github.com/xewe-labs/xewe-os), a template that pulls th
 of your choice and the build tools together. With only two commands, `setup.sh` and `run.sh`, you
 can go from an idea to flashed firmware.
 
-```mermaid
-graph TD
-    core["xewe-os-core<br/>XeWeCore library"]
-    modules["xewe-os-modules<br/>modules/&lt;slug&gt;, validated and tested"]
-    tools["xewe-os-tools<br/>xewe CLI: setup, build, flash, test, release"]
-    os["xewe-os<br/>template / harness<br/>xewe.toml pins versions, setup.sh, run.sh"]
-    led["xewe-led-os<br/>+ project-local modules in src/"]
-    chiller["xewe-chiller-os<br/>+ project-local modules in src/"]
-    core --> os
-    modules --> os
-    tools --> os
-    os --> led
-    os --> chiller
-```
+<picture><source media="(prefers-color-scheme: dark)" srcset="ecosystem-dark.svg"><img alt="xewe-os ecosystem: core, modules and tools come together in xewe-os; xewe-led-os and xewe-chiller-os are built on it" src="ecosystem-light.svg" width="960"></picture>
 
 ## Releases and CI/CD
 
