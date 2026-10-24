@@ -4,7 +4,7 @@ Every firmware is built from reusable pieces, and xewe-os is the modular framewo
 together. It is made for development with AI coding assistants. Two commands, `./setup.sh` and
 `./run.sh`, take you from an idea to flashed firmware.
 
-<img alt="xewe-os ecosystem: core, modules and custom modules flow into xewe-os from the top, tools enter from the side; xewe-led-os and xewe-chill-os are built on it" src="ecosystem.svg" width="960">
+<img alt="xewe-os ecosystem: core, modules and custom modules flow into xewe-os from the top, tools enter from the side; xewe-led-os and xewe-chill-os are built on it; custom modules are cyan, products purple" src="ecosystem-2.svg" width="960">
 
 ## Repositories
 
@@ -19,10 +19,6 @@ together. It is made for development with AI coding assistants. Two commands, `.
 
 * [`xewe-led-os`](https://github.com/xewe-labs/xewe-led-os): LED strip firmware for ESP32-C3, -C6 and -S3
 * [`xewe-led-os-homeassistant`](https://github.com/xewe-labs/xewe-led-os-homeassistant): Home Assistant integration for XeWe LED OS devices
-* [`library-homespan`](https://github.com/xewe-labs/library-homespan): fork: HomeKit library for the Arduino-ESP32 (archived)
-* [`library-espalexa`](https://github.com/xewe-labs/library-espalexa): fork: Alexa voice control for ESP8266/ESP32 (archived)
-* [`library-websockets`](https://github.com/xewe-labs/library-websockets): fork: arduinoWebSockets (archived)
-* [`led-web-draft`](https://github.com/xewe-labs/led-web-draft): simple web interface to control LED lights (archived)
 
 ### xewe-chill-os
 
@@ -41,6 +37,7 @@ together. It is made for development with AI coding assistants. Two commands, `.
 * [`led-retro-christmas-lights`](https://github.com/xewe-labs/led-retro-christmas-lights): an addressable LED strip in the Christmas mood (archived)
 * [`led-suv-bot`](https://github.com/xewe-labs/led-suv-bot): solar-charged cocktail stand with glass-triggered LED animations (archived)
 * [`led-wardrobe`](https://github.com/xewe-labs/led-wardrobe): smart wardrobe lighting on an ESP8266 with HomeKit and Alexa (archived)
+* [`led-web-draft`](https://github.com/xewe-labs/led-web-draft): simple web interface to control LED lights (archived)
 
 Why it is shaped this way: [xewe-os/doc/XEWE_OS_ECOSYSTEM.md](https://github.com/xewe-labs/xewe-os/blob/main/doc/XEWE_OS_ECOSYSTEM.md).
 Arduino IDE only? Install `XeWeCore` from the Library Manager and start with the
