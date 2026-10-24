@@ -5,7 +5,7 @@ uppercase rule for Markdown names:
 
 - `profile/README.md` is the organization's landing page. It is a profile page, so it keeps its
   own structure instead of the root README story order. Its diagram is
-  `profile/ecosystem-3.svg`, a single black-background SVG built with the xewe_diagram_builder
+  `profile/ecosystem-4.svg`, a single black-background SVG built with the xewe_diagram_builder
   skill. Change its file name when it changes, because GitHub's image proxy caches by URL.
 - `CONTRIBUTING.md`, `SECURITY.md` and `PULL_REQUEST_TEMPLATE.md` apply to every repository in
   the organization that has no copy of its own.

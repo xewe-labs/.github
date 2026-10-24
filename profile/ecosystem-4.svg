@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="312" viewBox="0 0 960 312" role="img" aria-labelledby="title desc">
+<title id="title">xewe-os ecosystem</title>
+<desc id="desc">From the top, xewe-os-modules (validated, tested modules), xewe-os-core (the XeWeCore library) and your custom project-local modules in src/ flow into xewe-os, the template; xewe-os-tools (the xewe CLI) enters from the side. xewe-led-os and xewe-chill-os are built on xewe-os. The ecosystem is cyan, custom modules gray and the products purple.</desc>
+<rect x="0.5" y="0.5" width="959" height="311" rx="12" fill="#000000" stroke="#1c211e"/>
+<defs>
+  <marker id="a-line" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#5a5d55" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></marker>
+</defs>
+<g fill="none" stroke-width="1.25">
+  <path d="M480 80V134" stroke="#5a5d55" marker-end="url(#a-line)"/>
+  <path d="M200 80C200 106 430 104 430 134" stroke="#5a5d55" marker-end="url(#a-line)"/>
+  <path d="M760 80C760 106 530 104 530 134" stroke="#5a5d55" marker-end="url(#a-line)"/>
+  <path d="M701 156H579" stroke="#5a5d55" stroke-width="1.5" stroke-dasharray="8 6"/>
+  <path d="M430 178C430 204 290 202 290 232" stroke="#5a5d55" marker-end="url(#a-line)"/>
+  <path d="M530 178C530 204 670 202 670 232" stroke="#5a5d55" marker-end="url(#a-line)"/>
+</g>
+<rect x="102.5" y="40.5" width="195" height="35" rx="6" fill="#050808" stroke="#2f656b"/>
+<text x="200" y="63" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8edde6" text-anchor="middle">xewe-os-modules</text>
+<rect x="382.5" y="40.5" width="195" height="35" rx="6" fill="#050808" stroke="#2f656b"/>
+<text x="480" y="63" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8edde6" text-anchor="middle">xewe-os-core</text>
+<rect x="662.5" y="40.5" width="195" height="35" rx="6" fill="#060606" stroke="#4d4d4d"/>
+<text x="760" y="63" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#bababa" text-anchor="middle">custom modules</text>
+<rect x="379" y="135" width="202" height="42" rx="9" fill="rgba(79,164,174,0.18)"/>
+<rect x="382.5" y="138.5" width="195" height="35" rx="6" fill="#1d373a" stroke="#74c9d3"/>
+<text x="480" y="161" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8edde6" text-anchor="middle">xewe-os</text>
+<rect x="702.5" y="138.5" width="195" height="35" rx="6" fill="#050808" stroke="#2f656b"/>
+<text x="800" y="161" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8edde6" text-anchor="middle">xewe-os-tools</text>
+<rect x="192.5" y="236.5" width="195" height="35" rx="6" fill="#070508" stroke="#4f2f6b"/>
+<text x="290" y="259" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#bd8ee6" text-anchor="middle">xewe-led-os</text>
+<rect x="572.5" y="236.5" width="195" height="35" rx="6" fill="#070508" stroke="#4f2f6b"/>
+<text x="670" y="259" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#bd8ee6" text-anchor="middle">xewe-chill-os</text>
+</svg>
