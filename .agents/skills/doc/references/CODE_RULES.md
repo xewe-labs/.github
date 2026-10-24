@@ -18,5 +18,5 @@
   process in code or docs").
 - Dotenv and key files are read by the tools, never by hand.
 
-The C++ rules in full are in `guidelines/CPP_STYLE.md` and the module rules in
-`guidelines/MODULES.md`.
+The C++ rules in full are in `guidelines/CPP_STYLE.md`. The module rules are in
+`xewe-os-modules/doc/CONTRACT.md`.

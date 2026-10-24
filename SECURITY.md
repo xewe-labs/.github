@@ -3,8 +3,8 @@
 ## Reporting a vulnerability
 
 Report suspected vulnerabilities through
-[GitHub's private vulnerability reporting](https://github.com/xewe-labs) on the affected
-repository (Security → Report a vulnerability). Do not open a public issue for something
+[GitHub's private vulnerability reporting](https://docs.github.com/en/code-security/security-advisories/guidance-on-reporting-and-writing-information-about-vulnerabilities/privately-reporting-a-security-vulnerability) on the affected
+repository (Security to Report a vulnerability). Do not open a public issue for something
 exploitable.
 
 Include what the problem is, which repository and version, and how to reproduce it.

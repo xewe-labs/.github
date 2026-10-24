@@ -6,43 +6,37 @@ the formatter wins.
 ## Formatting
 
 `xewe format` formats C and C++ with clang-format and the XeWe style that ships inside
-`xewe-os-tools` (`src/xewe/build/clang-format`), and Python with `ruff format`. No repository
-commits a `.clang-format`. `xewe format --check` is a blocking CI job in every repository.
+`xewe-os-tools`, and Python with `ruff format`. No repository commits a `.clang-format`.
+`xewe format --check` is a blocking CI job in every repository.
 
-The style: four spaces and no tabs, a 100-column limit, attached braces, `Type* name` and
+The style is four spaces and no tabs, a 100-column limit, attached braces, `Type* name` and
 `Type& name`, and nothing column-aligned (no aligned `#define`s, declarations, assignments or
 trailing comments), so a one-line change diffs as one line. Include order is preserved, never
 sorted.
 
 ## Files and names
 
-* **XeWeCore is one library:** one file pair per component in `src/XeWeCore/`, named like the
-  component (`Serial.h`/`Serial.cpp`, `Cli`, `Nvs`, `FlexData.h`, `Module`, `XeWeOs`), and the
+* **XeWeCore is one library.** It has one file pair per component in `src/XeWeCore/`, named like
+  the component (`Serial.h`/`Serial.cpp`, `Cli`, `Nvs`, `FlexData.h`, `Module`, `XeWeOs`), and
   header-only helpers in `src/XeWeCore/Utils/` behind `Utils.h`.
 * **A module is one folder per class**, named exactly like the class, holding files with the same
   name: `src/Wifi/Wifi.h`, `src/Wifi/Wifi.cpp`.
 * **Classes carry no prefix.** Everything in XeWeCore lives in `namespace xewe` (plus `xewe::str`
-  and `xewe::color`; there is no `xewe::os` namespace). The only global XeWeCore name is `XeWeOs`,
-  an alias of `xewe::Os`. Modules live in the global namespace.
-* **XeWeCore has exactly one top-level header**, `src/XeWeCore.h`, the umbrella that includes the
-  sub-headers in `src/XeWeCore/`. Arduino puts every library's `src/` on the include path, so a
-  second top-level header with a generic name collides with other libraries or with system headers.
-* **Includes:** sketches and modules include `#include <XeWeCore.h>`. arduino-cli discovers a
-  library only from its top-level headers, so a sketch whose only include is `<XeWeCore/Serial.h>`
-  does not build; a `XeWeCore/<Part>.h` sub-header may be included after the umbrella. Files within
-  a repository use relative quotes (`#include "Serial.h"` inside `src/XeWeCore/`); a module includes
-  a required module the same way (`#include "../Wifi/Wifi.h"`), since installed modules sit side by
-  side.
+  and `xewe::color`). The only global XeWeCore name is `XeWeOs`, an alias of `xewe::Os`. Modules
+  live in the global namespace.
+* **Sketches and modules include `<XeWeCore.h>`**, the library's single top-level header. The
+  reason is in
+  [`LIBRARY_RULES.md`](https://github.com/xewe-labs/xewe-os-core/blob/main/doc/LIBRARY_RULES.md).
+  Files inside a repository use relative quotes, and a module includes a required module the same
+  way (`#include "../Wifi/Wifi.h"`), since installed modules sit side by side.
 * **Headers use `#pragma once`**, after the license header.
 
 ## Names to avoid
 
-The AVR and ESP32 Arduino cores define these as function-like macros: `cli`, `sei`, `constrain`,
-`radians`, `degrees`, `sq`, `bit`, `lowByte`, `highByte`. Only the lowercase name directly
-followed by `(` expands, so `xewe::Cli cli(serial);` does not compile while `obj.cli.loop()` and
-`cli{serial}` are fine. That is why a standalone `xewe::Cli` object is named `xewe_cli` (as in
-XeWeCore's `03_Cli` example), and why the `XeWeOs` member `os.cli` is brace-initialised and only
-ever used as `os.cli.execute(...)`, never followed by `(`. Never write `cli(` anywhere.
+The Arduino cores define `cli`, `sei`, `constrain`, `radians`, `degrees`, `sq`, `bit`, `lowByte`
+and `highByte` as function-like macros, and the lowercase name directly followed by `(` expands.
+So `xewe::Cli cli(serial);` does not compile, a standalone `xewe::Cli` object is named `xewe_cli`,
+and `cli(` is never written anywhere.
 
 ## Debug output
 
@@ -55,57 +49,34 @@ build, never by editing the file:
 #endif
 ```
 
-Pass it as a compiler flag (`-DDEBUG_Wifi=1`, arduino-cli
-`--build-property "compiler.cpp.extra_flags=-DDEBUG_Wifi=1"`). A module also ships the switch in
-its `src/<Folder>/Config.h` as `XEWE_MODULE_<SLUG>_DEBUG` and defaults its `DEBUG_<Class>` to it;
-the project sets it in its own `Config.h`, which `xewe build` passes to every translation unit, or
-per build with `xewe build --define` (see the modules contract, section 3.2).
+Pass it as a compiler flag (`-DDEBUG_Wifi=1`). How a module ships the switch in its `Config.h`
+is in the
+[module contract](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/CONTRACT.md).
 
 ## Dependencies
 
 * XeWeCore's standalone components (Utils, Serial, Cli, FlexData, Nvs) never include `Module.h`
-  or `XeWeOs.h`; the include direction is Utils ← Serial ← Cli, FlexData ← Nvs, all ← Module ←
-  XeWeOs.
-* Every library a repository includes is declared: libraries in `library.properties` → `depends=`,
-  modules in `module.properties` → `depends_libraries` and `depends_modules`.
-* Modules name the constructor's Os parameter `host` (a parameter named `os` hides the
-  `Module::os` member), take the modules they need by reference as `<var>_ref`, register the
-  requirement, and capture `[this]` only in handlers; see [`MODULES.md`](MODULES.md).
+  or `XeWeOs.h`. The include direction is Utils, then Serial, then Cli and FlexData, then Nvs,
+  and all of them before Module and XeWeOs.
+* Every library a repository includes is declared: libraries in `library.properties` under
+  `depends=`, modules in `module.properties` under `depends_libraries` and `depends_modules`.
+* The constructor rules for modules (`host`, `<var>_ref`, `[this]` captures) are in the
+  [module contract](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/CONTRACT.md).
 
 ## Portability
 
-XeWeCore declares `architectures=esp32` only (C3, C6, S3), so these rules bind a library only if
-it ever declares more; XeWeCore's host tests still build with `-fno-exceptions`. Libraries that
-declare architectures beyond `esp32` follow four rules. They exist because the
-ESP32 core is unusually permissive: it builds at `-std=gnu++2b` with `-fexceptions`, while most
+XeWeCore declares `architectures=esp32` only, so these rules bind a library only if it declares
+more. They exist because the ESP32 core builds at `-std=gnu++2b` with `-fexceptions`, while most
 Arduino cores are C++17 with `-fno-exceptions`.
 
 * **C++17 is the floor.** No `std::span`, no concepts, no C++20 library additions. Use
   `xewe::span` from XeWeCore.
-* **No exceptions.** No `try`/`catch`, and no `std::stoi`/`stoll`/`stod`, because they throw. Parse with
-  `xewe::str::parse_int` / `parse_float`, which report failure by returning `false`.
-* **Platform-specific API goes behind a named feature macro**, `XEWE_<AREA>_HAS_<FEATURE>`,
-  declared with `#ifndef`, defaulted from core detection, and overridable from build flags, in
-  the same shape as the `DEBUG_<Class>` flags (for example `XEWE_SERIAL_HAS_BUFFER_SIZING`).
-  The esp32-only XeWeCore needs none.
+* **No exceptions.** No `try`/`catch`, and no `std::stoi`/`stoll`/`stod`, because they throw.
+  Parse with `xewe::str::parse_int` and `parse_float`, which return `false` on failure.
+* **Platform-specific API goes behind a feature macro**, `XEWE_<AREA>_HAS_<FEATURE>`, declared
+  with `#ifndef`, defaulted from core detection and overridable from build flags, in the same
+  shape as the `DEBUG_<Class>` flags.
 * **Optional vendor headers are gated with `__has_include`**, never a core-name `#ifdef`, and
-  never from a header a library's entry header includes unconditionally.
-
-Also avoid `Serial.printf`: it is not on the `Print` class for AVR, SAMD or STM32. Format with
-`xewe::str::format` and print the result.
-
-## What "done" means
-
-Code compiles for ESP32-C3, C6 and S3 before it is committed: XeWeCore through its examples
-(its `doc/tests.md`) and its host tests (`tests/unit/run.sh`), a module through `xewe test --module <slug>
---all-chips` in an `xewe-os` harness, firmware through `xewe build --all-chips`, all with 0
-warnings, and `xewe format --check` is clean. XeWeCore's `architectures=` names only what its
-examples are compiled for ([`xewe-os-core/doc/LIBRARY_RULES.md`](https://github.com/xewe-labs/xewe-os-core/blob/main/doc/LIBRARY_RULES.md)).
-
-## Comments
-
-Code carries almost no comments. A one-line comment goes only where the code is surprising, and
-says why: an invariant, a limit, a hardware or library fact, a stored-data compatibility reason.
-Comments carry no process (tool or session names, dates, decision or finding ids, "was …"
-history); see [`DOCUMENTATION.md`](DOCUMENTATION.md#no-process-in-code-or-docs). Example code
-(core examples, the template's example modules) explains the API to its reader.
+  never from a header that a library's entry header includes unconditionally.
+* **Avoid `Serial.printf`.** It is not on the `Print` class for AVR, SAMD or STM32. Format with
+  `xewe::str::format` and print the result.

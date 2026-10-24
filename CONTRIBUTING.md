@@ -8,8 +8,7 @@ with its own `CONTRIBUTING.md` overrides this one.
 * **A module?** You do not need access to this organization. Open a module proposal issue on
   [xewe-os-modules](https://github.com/xewe-labs/xewe-os-modules), then a pull request adding
   `modules/<slug>/` to it. Rules in
-  [`doc/CONTRACT.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/CONTRACT.md), summarised in
-  [`guidelines/MODULES.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/MODULES.md).
+  [`doc/CONTRACT.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/CONTRACT.md).
 * **A change to existing code?** Open an issue first when the change is large, changes behaviour
   people depend on, or touches more than one repository. Small fixes can go straight to a pull
   request.
@@ -31,16 +30,10 @@ with its own `CONTRIBUTING.md` overrides this one.
 
 ## Before opening a pull request
 
-* **It builds.** Everything compiles for ESP32-C3, C6 and S3 with 0 warnings: firmware with
-  `./setup.sh` then `build/tools/.venv/bin/python -m xewe build --all-chips`, a module with
-  `xewe test --module <slug> --all-chips` in a harness plus `tools/validate.py`, XeWeCore with
-  its host tests (`tests/unit/run.sh`) and its examples (`doc/tests.md`), the tools with their
-  pytest suite. CI runs the same checks on every push and pull request and must be green.
-* **It is formatted** with `xewe format` and passes `xewe brand-lint`; CI blocks on both. See
-  [`guidelines/CPP_STYLE.md`](https://github.com/xewe-labs/.github/blob/main/guidelines/CPP_STYLE.md).
-* **Generated files are not committed.** `build/`, `src/Modules.h`, `run.sh`, `.venv/` and
-  caches stay out of git. See each repository's `.gitignore`.
-* **Say what you tested.** Which boards, which commands, what you did not test.
+Work through the checklist in the
+[pull request template](https://github.com/xewe-labs/.github/blob/main/PULL_REQUEST_TEMPLATE.md).
+It covers the build, formatting, tests and generated files, and CI runs the same checks. Say in
+the description which boards and commands you tested and what you did not.
 
 ## Review
 
