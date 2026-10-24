@@ -4,7 +4,7 @@ Every firmware is built from reusable pieces, and xewe-os is the modular framewo
 together. It is made for development with AI coding assistants. Two commands, `./setup.sh` and
 `./run.sh`, take you from an idea to flashed firmware.
 
-<img alt="xewe-os ecosystem: core, modules and custom modules flow into xewe-os from the top, tools enter from the side; xewe-led-os and xewe-chill-os are built on it; custom modules are cyan, products purple" src="ecosystem-2.svg" width="960">
+<img alt="xewe-os ecosystem: core, modules and custom modules flow into xewe-os from the top, tools enter from the side; xewe-led-os and xewe-chill-os are built on it; the ecosystem is cyan, custom modules gray, products purple" src="ecosystem-3.svg" width="960">
 
 ## Repositories
 
