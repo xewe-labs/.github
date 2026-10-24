@@ -11,7 +11,7 @@ carries a few tools for rapid prototyping. [`xewe-os`](https://github.com/xewe-l
 it all together: a template that pulls in the core, the modules you choose and the build tools.
 Two commands, `./setup.sh` and `./run.sh`, take you from an idea to flashed firmware.
 
-<picture><source media="(prefers-color-scheme: dark)" srcset="ecosystem-dark.svg"><img alt="xewe-os ecosystem: core, modules and custom modules flow into xewe-os from the top, tools enter from the side; xewe-led-os and xewe-chill-os are built on it" src="ecosystem-light.svg" width="960"></picture>
+<img alt="xewe-os ecosystem: core, modules and custom modules flow into xewe-os from the top, tools enter from the side; xewe-led-os and xewe-chill-os are built on it" src="ecosystem.svg" width="960">
 
 ## Releases and CI/CD
 
