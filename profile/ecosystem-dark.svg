@@ -10,7 +10,7 @@
   <path d="M200 80C200 106 430 104 430 134" stroke="#5a5d55" marker-end="url(#a-line)"/>
   <path d="M480 80V134" stroke="#5a5d55" marker-end="url(#a-line)"/>
   <path d="M760 80C760 106 530 104 530 134" stroke="#5a5d55" marker-end="url(#a-line)"/>
-  <path d="M700 156H582" stroke="#5a5d55" marker-end="url(#a-line)"/>
+  <path d="M700 156H582" stroke="#5a5d55" stroke-dasharray="5 5" marker-end="url(#a-line)"/>
   <path d="M430 178C430 204 290 202 290 232" stroke="#5a5d55" marker-end="url(#a-accent)"/>
   <path d="M530 178C530 204 670 202 670 232" stroke="#5a5d55" marker-end="url(#a-accent)"/>
 </g>
