@@ -62,13 +62,7 @@ all three chips and has not yet run on the assembled pad.
 * [`library-homespan`](https://github.com/xewe-labs/library-homespan): fork: HomeKit library for the Arduino-ESP32 (archived)
 * [`library-espalexa`](https://github.com/xewe-labs/library-espalexa): fork: Alexa voice control for ESP8266/ESP32 (archived)
 * [`library-websockets`](https://github.com/xewe-labs/library-websockets): fork: arduinoWebSockets (archived)
-* [`led-reliable-dock`](https://github.com/xewe-labs/led-reliable-dock): reliable LED dock: build photos and design PDF
-* [`led-os-frontend`](https://github.com/xewe-labs/led-os-frontend): Flask prototype of the XeWe LED OS scheduler UI, exported to firmware (archived)
-* [`led-web-ui`](https://github.com/xewe-labs/led-web-ui): Flask prototype of a multi-device LED control page, second iteration (archived)
 * [`led-web-draft`](https://github.com/xewe-labs/led-web-draft): simple web interface to control LED lights (archived)
-* [`led-os-draft`](https://github.com/xewe-labs/led-os-draft): history, redirects to `xewe-led-os`
-* [`xewe-led-os-orphan`](https://github.com/xewe-labs/xewe-led-os-orphan): superseded 2026 attempt
-* [`xewe-led-quantum-controller-app`](https://github.com/xewe-labs/xewe-led-quantum-controller-app): merged into `led-quantum-controller` under `app/` (archived)
 
 ### xewe-chill-os
 
