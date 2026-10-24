@@ -12,8 +12,8 @@ repository, each linking the others. -->
       core logic gets a host test in `tests/unit/`; the tools get pytest cases)
 - [ ] No generated files committed: nothing from `build/`, `src/Modules.h`, `run.sh`, `.venv/` or
       caches
-- [ ] README / `doc/` / `.agents/` (modules: `doc/contract.md`) updated in this pull request where behaviour changed
-- [ ] Versions: no hand bump; versions change only through `scripts/release.sh --prepare`; `xewe.toml`
+- [ ] README, `doc/` and the xewe workspace (modules: `doc/CONTRACT.md`) updated in this pull request where behaviour changed
+- [ ] Versions: no hand bump, because versions change only through `scripts/release.sh`; `xewe.toml`
       refs untouched unless this pull request moves one on purpose
 
 **What I tested**

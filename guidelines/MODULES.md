@@ -5,11 +5,8 @@ figure it out again. All modules live in one repository,
 [`xewe-os-modules`](https://github.com/xewe-labs/xewe-os-modules), under `modules/<slug>/`.
 
 **The rules are in
-[`xewe-os-modules/doc/contract.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/contract.md)**,
-with its project rules in
-[`.agents/RULES.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/.agents/RULES.md) and the
-working steps in [`.agents/AGENTS.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/.agents/AGENTS.md).
-This page only lists what is never negotiable; where they differ, `doc/contract.md` wins.
+[`xewe-os-modules/doc/CONTRACT.md`](https://github.com/xewe-labs/xewe-os-modules/blob/main/doc/CONTRACT.md)**.
+This page lists only what is never negotiable, and where the two differ, `doc/CONTRACT.md` wins.
 
 ## Non-negotiables
 
@@ -17,7 +14,7 @@ This page only lists what is never negotiable; where they differ, `doc/contract.
    request. There are no per-module repositories, sketches or build scripts.
 2. **Layout.** `module.properties`, `src/<Folder>/<Folder>.h`, `src/<Folder>/<Folder>.cpp`,
    optional `src/<Folder>/Config.h`, `tests/board/test_<slug>.py`, optional `tests/unit/`,
-   `releases/<version>/` once released, and `README.md`; nothing else. Only
+   and `README.md`; nothing else. Only
    `src/<Folder>/` is installed into a firmware (`build/modules/src/<Folder>/`); the tests are
    copied to `build/modules/tests/<slug>/`.
 3. **`module.properties`** has every key, in the contract's order, even when empty, including
@@ -53,15 +50,16 @@ build/tools/.venv/bin/python -m xewe test --module <slug> --all-chips          #
 
 With `XEWE_MODULES_SOURCE` the harness uses the working tree directly; run `xewe modules generate`
 in the harness after each edit. Without a board, `test_compiles` passes or fails for real and the
-serial tests report "compiled, not run". The full gate (each module alone and all modules
-together) is in the modules repository's `.agents/AGENTS.md`.
+serial tests report "compiled, not run". The full gate builds each module alone and all modules
+together, which is what the modules repository's `scripts/release.sh` runs.
 
 ## Changing a released module
 
-Removing or renaming a command changes the interface people script against: release it as a
-MINOR version for additions and MAJOR for breaking changes, and say so in its README and its
-release notes. Each module is released on its own as tag `<module>/X.Y.Z` (`scripts/release.sh
---prepare X.Y.Z <module>` sets its `version`); the set tag `X.Y.Z` then marks a commit where every
-module is released at `X.Y.Z`, and is what projects pin and the tools fetch. Projects move to a new
-set tag with `xewe manifest update`. The steps are in the modules repository's README
-("Releasing") and [`git-and-releases.md`](git-and-releases.md).
+Removing or renaming a command changes the interface people script against. Release an addition
+as a MINOR version and a breaking change as MAJOR, and say so in the module's README and its
+release notes. Each module is released on its own as tag `<module>/X.Y.Z` by
+`scripts/release.sh X.Y.Z <module>`, which also sets its `version`. `scripts/release.sh X.Y.Z --all`
+releases every module and tags the set `X.Y.Z`, a commit where every module is released at
+`X.Y.Z`. Projects pin the set tag or a module tag, and move to a new one with
+`xewe manifest update`. The steps are in the modules repository's README ("Releasing") and
+[`GIT_AND_RELEASES.md`](GIT_AND_RELEASES.md).

@@ -21,5 +21,5 @@ Assume a device running this firmware is only as safe as the network it sits on:
 * Credentials stored in NVS (for example WiFi) are not encrypted.
 * Nothing is signed, and firmware updates are not verified.
 
-Treat these as known properties of the design rather than vulnerabilities. Reports that change
-them — a way to authenticate the HTTP interface, for example — are welcome as feature proposals.
+Treat these as known properties of the design rather than vulnerabilities. Proposals that change
+them, such as a way to authenticate the HTTP interface, are welcome as feature requests.

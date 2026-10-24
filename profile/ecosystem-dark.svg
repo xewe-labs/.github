@@ -1,35 +1,41 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="456" viewBox="0 0 960 456" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="440" viewBox="0 0 960 440" role="img" aria-labelledby="title desc">
 <title id="title">xewe-os ecosystem</title>
-<desc id="desc">From the top, xewe-os-core (XeWeCore library), xewe-os-modules (validated, tested modules) and your custom project-local modules in src/ flow into xewe-os, the template; xewe-os-tools (the xewe CLI) enters from the side. xewe-led-os and xewe-chiller-os are built on xewe-os.</desc>
-<rect width="960" height="456" rx="24" fill="#0A0A0B"/>
+<desc id="desc">From the top, xewe-os-core (the XeWeCore library), xewe-os-modules (validated, tested modules) and your custom project-local modules in src/ flow into xewe-os, the template; xewe-os-tools (the xewe CLI) enters from the side. xewe-led-os and xewe-chill-os are built on xewe-os.</desc>
+<rect x="0.5" y="0.5" width="959" height="439" rx="12" fill="#131815" stroke="#2a302c"/>
 <defs>
-  <marker id="a-line" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1L7.5 4L1 7" fill="none" stroke="#48484A" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></marker>
-  <marker id="a-accent" viewBox="0 0 8 8" refX="7.5" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1L7.5 4L1 7" fill="none" stroke="#2997FF" stroke-width="1" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="a-line" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#6b6a5e" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  <marker id="a-accent" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto"><path d="M1 1L7 4L1 7" fill="none" stroke="#4fae6a" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"/></marker>
 </defs>
-<g fill="none" stroke-width="1">
-  <path d="M134 112C134 144 328 144 328 176" stroke="#48484A" marker-end="url(#a-line)"/>
-  <path d="M384 112C384 144 384 144 384 176" stroke="#48484A" marker-end="url(#a-line)"/>
-  <path d="M634 112C634 144 440 144 440 176" stroke="#48484A" marker-end="url(#a-line)"/>
-  <path d="M626 228H544" stroke="#48484A" marker-end="url(#a-line)"/>
-  <path d="M328 280C328 312 204 312 204 344" stroke="#2997FF" marker-end="url(#a-accent)"/>
-  <path d="M440 280C440 312 564 312 564 344" stroke="#2997FF" marker-end="url(#a-accent)"/>
+<g fill="none" stroke-width="1.25">
+  <path d="M200 122C200 154 430 150 430 180" stroke="#6b6a5e" marker-end="url(#a-line)"/>
+  <path d="M480 122V180" stroke="#6b6a5e" marker-end="url(#a-line)"/>
+  <path d="M760 122C760 154 530 150 530 180" stroke="#6b6a5e" marker-end="url(#a-line)"/>
+  <path d="M700 202H582" stroke="#6b6a5e" marker-end="url(#a-line)"/>
+  <path d="M430 286C430 316 290 312 290 340" stroke="#4fae6a" marker-end="url(#a-accent)"/>
+  <path d="M530 286C530 316 670 312 670 340" stroke="#4fae6a" marker-end="url(#a-accent)"/>
 </g>
-<rect x="224" y="176" width="320" height="104" rx="18" fill="#2C2C2E"/>
-<g font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif" text-anchor="middle">
-  <text x="134" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os-core</text>
-  <text x="134" y="92" font-size="13" font-weight="400" fill="#8E8E93">XeWeCore library</text>
-  <text x="384" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os-modules</text>
-  <text x="384" y="92" font-size="13" font-weight="400" fill="#8E8E93">Validated, tested modules</text>
-  <text x="634" y="68" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">custom modules</text>
-  <text x="634" y="92" font-size="13" font-weight="400" fill="#8E8E93">project-local, in src/</text>
-  <text x="384" y="216" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-os</text>
-  <text x="384" y="240" font-size="13" font-weight="400" fill="#A1A1A6">Template</text>
-  <text x="384" y="258" font-size="13" font-weight="400" fill="#A1A1A6">xewe.toml pins versions, setup.sh, run.sh</text>
-  <text x="640" y="222" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2" text-anchor="start">xewe-os-tools</text>
-  <text x="640" y="246" font-size="13" font-weight="400" fill="#8E8E93" text-anchor="start">xewe CLI: setup, build, flash, test, release</text>
-  <text x="204" y="374" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-led-os</text>
-  <text x="204" y="398" font-size="13" font-weight="400" fill="#8E8E93">LED strip firmware</text>
-  <text x="564" y="374" font-size="17" font-weight="600" fill="#F5F5F7" letter-spacing="-0.2">xewe-chiller-os</text>
-  <text x="564" y="398" font-size="13" font-weight="400" fill="#8E8E93">laptop cooling pad firmware</text>
-</g>
+<rect x="102.5" y="44.5" width="195" height="35" rx="6" fill="#1d3a26" stroke="#4fae6a"/>
+<text x="200" y="67" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8ee6a0" text-anchor="middle">xewe-os-core</text>
+<text x="200" y="104" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">XeWeCore library</text>
+<rect x="382.5" y="44.5" width="195" height="35" rx="6" fill="#1d3a26" stroke="#4fae6a"/>
+<text x="480" y="67" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8ee6a0" text-anchor="middle">xewe-os-modules</text>
+<text x="480" y="104" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">validated, tested modules</text>
+<rect x="662.5" y="44.5" width="195" height="35" rx="6" fill="#1d3a26" stroke="#4fae6a"/>
+<text x="760" y="67" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8ee6a0" text-anchor="middle">custom modules</text>
+<text x="760" y="104" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">project-local, in src/</text>
+<rect x="379.0" y="181" width="202" height="42" rx="9" fill="rgba(79,174,106,0.14)"/>
+<rect x="382.5" y="184.5" width="195" height="35" rx="6" fill="#25492f" stroke="#74d38d"/>
+<text x="480" y="207" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8ee6a0" text-anchor="middle">xewe-os</text>
+<text x="480" y="244" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">the template</text>
+<text x="480" y="264" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">xewe.toml pins versions, setup.sh, run.sh</text>
+<rect x="702.5" y="184.5" width="195" height="35" rx="6" fill="#1d3a26" stroke="#4fae6a"/>
+<text x="800" y="207" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8ee6a0" text-anchor="middle">xewe-os-tools</text>
+<text x="800" y="244" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">the xewe CLI</text>
+<text x="800" y="264" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">setup, build, flash, test, release</text>
+<rect x="192.5" y="344.5" width="195" height="35" rx="6" fill="#1d3a26" stroke="#4fae6a"/>
+<text x="290" y="367" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8ee6a0" text-anchor="middle">xewe-led-os</text>
+<text x="290" y="404" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">LED strip firmware</text>
+<rect x="572.5" y="344.5" width="195" height="35" rx="6" fill="#1d3a26" stroke="#4fae6a"/>
+<text x="670" y="367" font-family="'Space Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace" font-size="15" font-weight="700" fill="#8ee6a0" text-anchor="middle">xewe-chill-os</text>
+<text x="670" y="404" font-family="Newsreader, Georgia, 'Times New Roman', serif" font-size="15" fill="#b9bdb6" text-anchor="middle">laptop cooling pad firmware</text>
 </svg>

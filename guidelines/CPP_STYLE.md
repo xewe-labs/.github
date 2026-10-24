@@ -70,7 +70,7 @@ per build with `xewe build --define` (see the modules contract, section 3.2).
   modules in `module.properties` → `depends_libraries` and `depends_modules`.
 * Modules name the constructor's Os parameter `host` (a parameter named `os` hides the
   `Module::os` member), take the modules they need by reference as `<var>_ref`, register the
-  requirement, and capture `[this]` only in handlers; see [`modules.md`](modules.md).
+  requirement, and capture `[this]` only in handlers; see [`MODULES.md`](MODULES.md).
 
 ## Portability
 
@@ -82,12 +82,12 @@ Arduino cores are C++17 with `-fno-exceptions`.
 
 * **C++17 is the floor.** No `std::span`, no concepts, no C++20 library additions. Use
   `xewe::span` from XeWeCore.
-* **No exceptions.** No `try`/`catch`, no `std::stoi`/`stoll`/`stod` — they throw. Parse with
+* **No exceptions.** No `try`/`catch`, and no `std::stoi`/`stoll`/`stod`, because they throw. Parse with
   `xewe::str::parse_int` / `parse_float`, which report failure by returning `false`.
 * **Platform-specific API goes behind a named feature macro**, `XEWE_<AREA>_HAS_<FEATURE>`,
-  declared with `#ifndef`, defaulted from core detection, and overridable from build flags — the
-  same shape as the `DEBUG_<Class>` flags (for example `XEWE_SERIAL_HAS_BUFFER_SIZING`);
-  esp32-only XeWeCore needs none.
+  declared with `#ifndef`, defaulted from core detection, and overridable from build flags, in
+  the same shape as the `DEBUG_<Class>` flags (for example `XEWE_SERIAL_HAS_BUFFER_SIZING`).
+  The esp32-only XeWeCore needs none.
 * **Optional vendor headers are gated with `__has_include`**, never a core-name `#ifdef`, and
   never from a header a library's entry header includes unconditionally.
 
@@ -100,11 +100,12 @@ Code compiles for ESP32-C3, C6 and S3 before it is committed: XeWeCore through i
 (its `doc/tests.md`) and its host tests (`tests/unit/run.sh`), a module through `xewe test --module <slug>
 --all-chips` in an `xewe-os` harness, firmware through `xewe build --all-chips`, all with 0
 warnings, and `xewe format --check` is clean. XeWeCore's `architectures=` names only what its
-examples are compiled for ([`xewe-os-core/doc/library-rules.md`](https://github.com/xewe-labs/xewe-os-core/blob/main/doc/library-rules.md)).
+examples are compiled for ([`xewe-os-core/doc/LIBRARY_RULES.md`](https://github.com/xewe-labs/xewe-os-core/blob/main/doc/LIBRARY_RULES.md)).
 
 ## Comments
 
-A comment says what the code does or why: an invariant, a limit, a hardware or library fact, a
-stored-data compatibility reason. No process in code (agent or session names, dates, decision or
-finding ids, "was …" history); see [`documentation.md`](documentation.md#no-process-in-code-or-docs).
-Example code (core examples, the template's example modules) explains the API to its reader.
+Code carries almost no comments. A one-line comment goes only where the code is surprising, and
+says why: an invariant, a limit, a hardware or library fact, a stored-data compatibility reason.
+Comments carry no process (tool or session names, dates, decision or finding ids, "was …"
+history); see [`DOCUMENTATION.md`](DOCUMENTATION.md#no-process-in-code-or-docs). Example code
+(core examples, the template's example modules) explains the API to its reader.

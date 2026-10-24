@@ -6,7 +6,7 @@ labels: module
 ---
 
 <!-- A module is code someone figured out once so nobody has to figure it out again.
-The rules are in xewe-os-modules/doc/contract.md; this proposal checks the identity and the
+The rules are in xewe-os-modules/doc/CONTRACT.md; this proposal checks the identity and the
 dependencies before any code is written. -->
 
 **What it figures out once**
